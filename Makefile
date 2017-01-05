@@ -1,17 +1,19 @@
 CC = gcc
 CFLAGS =-std=c89 -Wall  -Werror -pedantic
 LFLAGS =-lSDL2 -lSDL2_image
-EXE = bin/game
-SRC = src
-OFILES = $(patsubst %.c,%.o,$(wildcard $(SRC)/*.c)) 
 
-all: $(EXE)
+SRC_DIR = src
+OBJECTS = $(patsubst %.c,%.o,$(wildcard $(SRC_DIR)/*.c)) 
+BIN_DIR = bin
+EXECUTABLE = game
 
-$(EXE): $(OFILES)
-	$(CC) $(CFLAGS) $^ -o $@ $(LFLAGS)
+all: $(EXECUTABLE)
 
-$(SRC)/%.o: $(SRC)/%.c
-	$(CC) $(CFLAGS) -c $^  -o $@
+$(EXECUTABLE): $(OBJECTS)
+	$(CC) $(CFLAGS) $^ -o $(BIN_DIR)/$@ $(LFLAGS)
+
+$(BIN_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) $(CFLAGS) -c $^ -o $@
 
 clean:
-	rm $(SRC)/*.o && rm $(EXE)
+	rm $(SRC_DIR)/*.o $(BIN_DIR)/$(EXECUTABLE)
