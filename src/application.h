@@ -3,5 +3,9 @@
 
 	#include "SDL2/SDL.h"
 
+	void Update_window(void);
+	SDL_Surface* Get_screen(void);
 	int init_window( const char* title, int width, int height ); 
+
+	void CleanUp_window(void);
 #endif

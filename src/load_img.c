@@ -2,14 +2,13 @@
 #include "load_img.h"
 #include "stdio.h"
 #include "SDL2/SDL_image.h"
-
-SDL_Surface *load_img(const char* filename);
+#include "application.h"
 
 SDL_Surface* images[IMGS_TOTAL];
 
 SDL_Surface* load_img( const char* filename ) {
 	/*The img that's loaded*/
-	SDL_Surface* loadedImage;
+	SDL_Surface* loadedImage	= NULL;
 	
 	/*Initialize PNG loading*/
 	int imgFlags = IMG_INIT_PNG;
@@ -21,33 +20,43 @@ SDL_Surface* load_img( const char* filename ) {
 	/*Load the img using SDL_image*/
 	loadedImage = IMG_Load(filename);
 
-	printf("loading img: %s\n", filename);		
-
 	/*If the image loaded*/
-	if( loadedImage == NULL ) {
+	if( loadedImage == NULL )
 		printf("Error opening image %s\n", filename);
-	}
 
 	/*Return the optimized image*/
 	return loadedImage;
 }
 
-void load_imgs() {
+void load_imgs(void) {
 	load_heroes_imgs();
 	load_finish_imgs();
 	load_backgr_imgs();
 }
 
-void load_heroes_imgs(){
-	images[HEROES_GOLD_IMG] = load_img("img/heroes_gold.png");
-	images[HEROES_NORMAL_IMG] = load_img("img/heroes_normal.png");
+void load_heroes_imgs(void){
+	images[HEROES_GOLD_IMG] 	= load_img("img/heroes_gold.png");
+	images[HEROES_NORMAL_IMG] 	= load_img("img/heroes_normal.png");
 }
 
-void load_finish_imgs(){
-	images[FINISH_GOLD_IMG] = load_img("img/finish_gold.png");
-	images[FINISH_NORMAL_IMG] = load_img("img/finish_normal.png");
+void load_finish_imgs(void){
+	images[FINISH_GOLD_IMG] 	= load_img("img/finish_gold.png");
+	images[FINISH_NORMAL_IMG] 	= load_img("img/finish_normal.png");
 }
 
-void load_backgr_imgs(){
-	images[BACKGROUND_IMG] = load_img("img/background.png");
+void load_backgr_imgs(void){
+	images[BACKGROUND_IMG] 		= load_img("img/background.png");
+}
+
+SDL_Surface* Get_image(int index){
+	if (index < IMGS_TOTAL) return images[index];
+	else 					return NULL;
+}
+
+void CleanUp_images(void){
+	int i;
+	for( i = 0; i < IMGS_TOTAL; ++i ) {
+		if (NULL != images[i]) SDL_FreeSurface(images[i]);
+		images[i] = NULL;
+	}
 }

@@ -6,11 +6,11 @@
 	#define SCREEN_HEIGHT 	480
 
 	/* Initializes all resources*/
-	static void resource_init	( void );
+	static void Resource_init	( void );
 	/* Initializes all internal entities needed for the game at startup*/
-	static void game_init		( void );
+	static void Game_init		( void );
 	/* Perfoms a loop, updating and rendering*/
-	static void main_loop		( void );
+	static void Main_loop		( void );
 	/* Frees all resources*/
-	static void clean_up		( void );
+	static void Clean_up		( void );
 #endif   
