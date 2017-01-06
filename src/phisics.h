@@ -1,6 +1,6 @@
 #ifndef _PHISICS_H_
 	#define _PHISICS_H_
-	
+
 	enum{
 		HEROES,
 		FINISH,
@@ -9,12 +9,13 @@
 	};
 
 	typedef struct {
+		size_t type;
 		size_t x;
 		size_t y;
 		size_t w;
 		size_t h;
-		int vx;
-		int vy;
+		float vx;
+		float vy;
 	} Coord;
 
 void Set_heads_imgs(void);
