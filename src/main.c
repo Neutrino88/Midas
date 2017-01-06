@@ -16,8 +16,8 @@ int main() {
 }
 
 static void Resource_init() {
-	init_window(SCREEN_TITLE, SCREEN_WIDTH, SCREEN_HEIGHT);
-	load_imgs();
+	Init_window(SCREEN_TITLE, SCREEN_WIDTH, SCREEN_HEIGHT);
+	Load_imgs();
 }
 
 static void Game_init() {

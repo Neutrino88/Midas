@@ -6,7 +6,7 @@
 
 SDL_Surface* images[IMGS_TOTAL];
 
-SDL_Surface* load_img( const char* filename ) {
+SDL_Surface* Load_img( const char* filename ) {
 	/*The img that's loaded*/
 	SDL_Surface* loadedImage	= NULL;
 	
@@ -28,24 +28,24 @@ SDL_Surface* load_img( const char* filename ) {
 	return loadedImage;
 }
 
-void load_imgs(void) {
-	load_heroes_imgs();
-	load_finish_imgs();
-	load_backgr_imgs();
+void Load_imgs(void) {
+	Load_heroes_imgs();
+	Load_finish_imgs();
+	Load_backgr_imgs();
 }
 
-void load_heroes_imgs(void){
-	images[HEROES_GOLD_IMG] 	= load_img("img/heroes_gold.png");
-	images[HEROES_NORMAL_IMG] 	= load_img("img/heroes_normal.png");
+void Load_heroes_imgs(void){
+	images[HEROES_GOLD_IMG] 	= Load_img("img/heroes_gold.png");
+	images[HEROES_NORMAL_IMG] 	= Load_img("img/heroes_normal.png");
 }
 
-void load_finish_imgs(void){
-	images[FINISH_GOLD_IMG] 	= load_img("img/finish_gold.png");
-	images[FINISH_NORMAL_IMG] 	= load_img("img/finish_normal.png");
+void Load_finish_imgs(void){
+	images[FINISH_GOLD_IMG] 	= Load_img("img/finish_gold.png");
+	images[FINISH_NORMAL_IMG] 	= Load_img("img/finish_normal.png");
 }
 
-void load_backgr_imgs(void){
-	images[BACKGROUND_IMG] 		= load_img("img/background.png");
+void Load_backgr_imgs(void){
+	images[BACKGROUND_IMG] 		= Load_img("img/background.png");
 }
 
 SDL_Surface* Get_image(int index){
