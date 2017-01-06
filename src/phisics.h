@@ -7,4 +7,8 @@
 		size_t w;
 		size_t h;
 	} Coord;
+
+void Set_heads_imgs(void);
+Coord* Get_head_img(size_t index);
+
 #endif

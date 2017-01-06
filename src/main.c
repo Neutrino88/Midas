@@ -3,6 +3,7 @@
 #include "application.h"
 #include "load_img.h"
 #include "draw.h"
+#include "phisics.h"
 
 int main() {
 	Resource_init();
@@ -18,6 +19,7 @@ int main() {
 static void Resource_init() {
 	Init_window(SCREEN_TITLE, SCREEN_WIDTH, SCREEN_HEIGHT);
 	Load_imgs();
+	Set_heads_imgs();
 }
 
 static void Game_init() {
