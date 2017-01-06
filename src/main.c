@@ -24,7 +24,7 @@ static void Resource_init() {
 
 static void Game_init() {
 	Draw_img(100, 50, Get_image(FINISH_GOLD_IMG));
-	Fill_rect(10, 10, 30, 30, 255, 0, 0);
+	Draw_block(GRAY_BLOCK, 10, 10, 30, 30);
 	Update_window();
 }
 

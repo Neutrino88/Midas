@@ -6,6 +6,8 @@
 		size_t y;
 		size_t w;
 		size_t h;
+		int vx;
+		int vy;
 	} Coord;
 
 void Set_heads_imgs(void);
