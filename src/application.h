@@ -8,4 +8,5 @@
 	int Init_window( const char* title, int width, int height ); 
 
 	void CleanUp_window(void);
+	void CleanUp_screen(void);
 #endif

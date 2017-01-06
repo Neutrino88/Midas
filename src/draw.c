@@ -1,6 +1,7 @@
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 #include "application.h"
+#include "load_img.h"
 #include "draw.h"
 
 int Draw_img(size_t x, size_t y, SDL_Surface* src_surface){
@@ -37,4 +38,21 @@ int Draw_block(size_t block_type, size_t x, size_t y, size_t w, size_t h){
 		SDL_FillRect(Get_screen(), &rect, SDL_MapRGB(Get_screen()->format, GRAY_COLOR_R, GRAY_COLOR_G, GRAY_COLOR_B));
 
 	return 0;
+}
+
+int Draw_background(void){
+	int x;
+	int screen_width;
+	SDL_Rect dest_rect;
+
+	if (Get_screen() == NULL || Get_image(BACKGROUND_IMG) == NULL) return -1;
+
+	screen_width = Get_screen()->w;
+
+	for (x = 0; x < screen_width; ++x){
+	    dest_rect.x = x;
+		SDL_BlitSurface(Get_image(BACKGROUND_IMG), NULL, Get_screen(), &dest_rect);    
+	}
+ 
+    return 0;
 }

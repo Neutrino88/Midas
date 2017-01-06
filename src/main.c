@@ -19,10 +19,11 @@ int main() {
 static void Resource_init() {
 	Init_window(SCREEN_TITLE, SCREEN_WIDTH, SCREEN_HEIGHT);
 	Load_imgs();
-	Set_heads_imgs();
+	/*Set_heads_imgs();*/
 }
 
 static void Game_init() {
+	Draw_background();
 	Draw_img(100, 50, Get_image(FINISH_GOLD_IMG));
 	Draw_block(GRAY_BLOCK, 10, 10, 30, 30);
 	Update_window();
@@ -34,6 +35,7 @@ static void Main_loop() {
 
 static void Clean_up() {
 	CleanUp_images();
+	CleanUp_screen();
 	CleanUp_window();
 
 	SDL_Quit();

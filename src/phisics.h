@@ -1,5 +1,12 @@
 #ifndef _PHISICS_H_
 	#define _PHISICS_H_
+	
+	enum{
+		HEROES,
+		FINISH,
+		PROBLEM,
+		PERS_TOTAL
+	};
 
 	typedef struct {
 		size_t x;

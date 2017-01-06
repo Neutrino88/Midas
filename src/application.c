@@ -26,3 +26,8 @@ void CleanUp_window(void){
 	if (NULL != window) SDL_DestroyWindow(window);
 	window = NULL;
 }
+
+void CleanUp_screen(void){
+	if (NULL != screen) SDL_FreeSurface(screen);
+	screen = NULL;
+}
