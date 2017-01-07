@@ -66,6 +66,8 @@ static void Clean_up() {
 	CleanUp_screen();
 	CleanUp_window();
 
+	CleanUp_heads();
+
 	SDL_Quit();
 }
 

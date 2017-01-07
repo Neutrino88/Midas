@@ -4,7 +4,8 @@
 #include "malloc.h"
 
 Coord* head_imgs[PERS_TOTAL];
-Coord* head_blocks[PERS_TOTAL];
+Coord* head_blocks;
+size_t blocks_total;
 
 Coord* Get_head_img(size_t index){
 	if (index < PERS_TOTAL) return head_imgs[index];
@@ -34,5 +35,14 @@ void Set_heads_imgs(void){
 }
 
 void Move_heroes_on_Ox(int step){
+
+}
+
+void CleanUp_heads(void){
+	int i;
+	for (i = 0; i < PERS_TOTAL; ++i)
+		head_imgs[i] = NULL;
 	
+	if (NULL != head_blocks)
+		free(head_blocks);
 }

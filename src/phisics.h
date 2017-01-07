@@ -23,4 +23,6 @@ Coord* Get_head_img(size_t index);
 
 void Move_heroes_on_Ox(int step);
 
+void CleanUp_heads(void);
+
 #endif
