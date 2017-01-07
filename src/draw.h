@@ -14,7 +14,7 @@
 	#define GRAY_COLOR_G 192
 	#define GRAY_COLOR_B 192
 
-	#define BORDER_COLOR_R 255
+	#define BORDER_COLOR_R 0
 	#define BORDER_COLOR_G 0
 	#define BORDER_COLOR_B 0
 

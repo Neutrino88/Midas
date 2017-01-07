@@ -1,5 +1,5 @@
 #include "SDL2/SDL.h"
-#include "load_img.h"
+#include "images.h"
 #include "stdio.h"
 #include "SDL2/SDL_image.h"
 #include "application.h"

@@ -21,4 +21,6 @@
 void Set_heads_imgs(void);
 Coord* Get_head_img(size_t index);
 
+void Move_heroes_on_Ox(int step);
+
 #endif

@@ -1,10 +1,10 @@
 #include "stdio.h"
-#include "load_img.h"
+#include "images.h"
 #include "phisics.h"
-#include "load_img.h"
 #include "malloc.h"
 
 Coord* head_imgs[PERS_TOTAL];
+Coord* head_blocks[PERS_TOTAL];
 
 Coord* Get_head_img(size_t index){
 	if (index < PERS_TOTAL) return head_imgs[index];
@@ -31,4 +31,8 @@ void Set_heads_imgs(void){
 	
 	for (i = 0; i < PERS_TOTAL; ++i)
 		Set_head_img(i);
+}
+
+void Move_heroes_on_Ox(int step){
+	
 }

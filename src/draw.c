@@ -1,7 +1,7 @@
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 #include "application.h"
-#include "load_img.h"
+#include "images.h"
 #include "draw.h"
 
 int Draw_img(size_t x, size_t y, SDL_Surface* src_surface){
