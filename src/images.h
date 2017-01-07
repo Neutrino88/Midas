@@ -13,11 +13,12 @@
 		IMGS_TOTAL
 	};
 
-	void Load_imgs(void);
-	void Load_heroes_imgs(void);
-	void Load_finish_imgs(void);
-	void Load_backgr_imgs(void);
-
-	SDL_Surface* Get_image(int index);
-	void CleanUp_images(void);
+	SDL_Surface* 	Load_img 		( const char* filename );
+	
+	void 			Load_heroes_imgs(SDL_Surface** images);
+	void 			Load_finish_imgs(SDL_Surface** images);
+	void 			Load_backgr_imgs(SDL_Surface** images);
+	
+	SDL_Surface** 	Load_imgs 		(void);
+	void 			CleanUp_imgs 	(SDL_Surface** images);
 #endif

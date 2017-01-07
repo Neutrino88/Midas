@@ -18,7 +18,7 @@
 	#define BORDER_COLOR_G 0
 	#define BORDER_COLOR_B 0
 
-	int Draw_img		(SDL_Surface* dest_surface, SDL_Surface* src_surface, size_t x, size_t y);
-	int Draw_block		(SDL_Surface* dest_surface, size_t block_type, size_t x, size_t y, size_t w, size_t h);
-	int Draw_background	(SDL_Surface* dest_surface, SDL_Surface* src_surface);
+	int Draw_image_in_every_pixel	(SDL_Surface* dest_surface, SDL_Surface* src_surface);
+	int Draw_image 					(SDL_Surface* dest_surface, SDL_Surface* src_surface, size_t x, size_t y);
+	int Draw_rectangle				(SDL_Surface* dest_surface, size_t block_type, size_t x, size_t y, size_t w, size_t h);
 #endif

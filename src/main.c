@@ -1,8 +1,7 @@
 #include "application.h"
-#include "images.h"
-#include "draw.h"
-#include "game.h"
+#include "draw_game.h"
 #include "main.h"
+#include "images.h"
 
 static int gameRunning;
 
@@ -19,9 +18,10 @@ int main(int argc, char *argv[]) {
 
 static void Resource_init(char* levels_file_path) {
 	Init_window(SCREEN_TITLE, SCREEN_WIDTH, SCREEN_HEIGHT);
-	Load_imgs();
+	/*Load_imgs();
 	Set_heads_imgs();	
-
+*/
+	Init_draw_game();
 	Load_levels(levels_file_path);
 
 }
@@ -63,28 +63,28 @@ static void Main_loop() {
 }
 
 static void Clean_up() {
-	CleanUp_images();
+	/*CleanUp_images();*/
 	CleanUp_screen();
 	CleanUp_window();
 
-	CleanUp_heads();
+	/*CleanUp_heads();*/
 
 	SDL_Quit();
 }
 
 static void Key_up_event(void){
-	Draw_background	(Get_screen(), Get_image(BACKGROUND_IMG));
-	Draw_img		(Get_screen(), Get_image(HEROES_NORMAL_IMG), 10, 40);
+	Draw_background();
+	Draw_heroes(HEROES_NORMAL_IMG, 10, 40);
 }
 
 static void Key_left_event(void){
-	Draw_background	(Get_screen(), Get_image(BACKGROUND_IMG));
-	Draw_block		(Get_screen(), GOLD_BLOCK, 30, 200, 50, 40);
+	Draw_background();
+	Draw_block(GOLD_BLOCK, 30, 200, 50, 40);
 }
 
 static void Key_right_event(void){
-	Draw_background(Get_screen(), Get_image(BACKGROUND_IMG));
-	Draw_block(Get_screen(), GRAY_BLOCK, 300, 400, 50, 40);
+	Draw_background();
+	Draw_block(GRAY_BLOCK, 300, 400, 50, 40);
 }
 
 static void Key_restart_level_event(void){

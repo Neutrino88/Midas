@@ -2,7 +2,7 @@
 #include "SDL2/SDL_image.h"
 #include "draw.h"
 
-int Draw_img(SDL_Surface* dest_surface, SDL_Surface* src_surface, size_t x, size_t y){
+int Draw_image(SDL_Surface* dest_surface, SDL_Surface* src_surface, size_t x, size_t y){
     SDL_Rect 		dest_rect;
 
     if(dest_surface == NULL || src_surface == NULL) return -1;
@@ -15,7 +15,7 @@ int Draw_img(SDL_Surface* dest_surface, SDL_Surface* src_surface, size_t x, size
     return 0;
 }
 
-int Draw_block(SDL_Surface* dest_surface, size_t block_type, size_t x, size_t y, size_t w, size_t h){
+int Draw_rectangle(SDL_Surface* dest_surface, size_t block_type, size_t x, size_t y, size_t w, size_t h){
 	SDL_Rect rect;
 
 	if(dest_surface == NULL) return -1;
@@ -40,7 +40,7 @@ int Draw_block(SDL_Surface* dest_surface, size_t block_type, size_t x, size_t y,
 	return 0;
 }
 
-int Draw_background(SDL_Surface* dest_surface, SDL_Surface*	src_surface){
+int Draw_image_in_every_pixel(SDL_Surface* dest_surface, SDL_Surface*	src_surface){
 	int 			x;
 	int 			screen_width;
 	SDL_Rect 		dest_rect;

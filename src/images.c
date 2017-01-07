@@ -1,11 +1,9 @@
 #include "stdio.h"
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
+#include "malloc.h"
 
 #include "images.h"
-#include "application.h"
-
-SDL_Surface* images[IMGS_TOTAL];
 
 SDL_Surface* Load_img( const char* filename ) {
 	/*The img that's loaded*/
@@ -29,34 +27,34 @@ SDL_Surface* Load_img( const char* filename ) {
 	return loadedImage;
 }
 
-void Load_imgs(void) {
-	Load_heroes_imgs();
-	Load_finish_imgs();
-	Load_backgr_imgs();
-}
-
-void Load_heroes_imgs(void){
+void Load_heroes_imgs(SDL_Surface** images){
 	images[HEROES_GOLD_IMG] 	= Load_img("img/heroes_gold.png");
 	images[HEROES_NORMAL_IMG] 	= Load_img("img/heroes_normal.png");
 }
 
-void Load_finish_imgs(void){
+void Load_finish_imgs(SDL_Surface** images){
 	images[FINISH_GOLD_IMG] 	= Load_img("img/finish_gold.png");
 	images[FINISH_NORMAL_IMG] 	= Load_img("img/finish_normal.png");
 }
 
-void Load_backgr_imgs(void){
+void Load_backgr_imgs(SDL_Surface** images){
 	images[BACKGROUND_IMG] 		= Load_img("img/background.png");
 }
 
-SDL_Surface* Get_image(int index){
-	if (index < IMGS_TOTAL) return images[index];
-	else 					return NULL;
+SDL_Surface** Load_imgs(void){
+	SDL_Surface** images = (SDL_Surface**)calloc(sizeof(SDL_Surface*), IMGS_TOTAL);
+	if (NULL == images) return NULL;
+
+	Load_heroes_imgs(images);
+	Load_finish_imgs(images);
+	Load_backgr_imgs(images);
+
+	return images;
 }
 
-void CleanUp_images(void){
+void CleanUp_imgs(SDL_Surface** images){
 	int i;
-	for( i = 0; i < IMGS_TOTAL; ++i ) {
+	for(i = 0; i < IMGS_TOTAL; ++i) {
 		if (NULL != images[i]) SDL_FreeSurface(images[i]);
 		images[i] = NULL;
 	}
