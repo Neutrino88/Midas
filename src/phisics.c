@@ -40,8 +40,10 @@ void Move_heroes_on_Ox(int step){
 
 void CleanUp_heads(void){
 	int i;
-	for (i = 0; i < PERS_TOTAL; ++i)
+	for (i = 0; i < PERS_TOTAL; ++i){
+		free(head_imgs[i]);
 		head_imgs[i] = NULL;
+	}
 	
 	if (NULL != head_blocks)
 		free(head_blocks);
