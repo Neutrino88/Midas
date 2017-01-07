@@ -18,7 +18,7 @@
 	#define BORDER_COLOR_G 0
 	#define BORDER_COLOR_B 0
 
-	int Draw_img		(size_t x, size_t y, SDL_Surface* src_surface);
+	int Draw_img		(SDL_Surface* src_surface, size_t x, size_t y);
 	int Draw_block		(size_t block_type, size_t x, size_t y, size_t w, size_t h);
 	int Draw_background	(void);
 #endif

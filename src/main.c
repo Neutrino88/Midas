@@ -21,8 +21,10 @@ int main(int argc, char *argv[]) {
 static void Resource_init(char* levels_file_path) {
 	Init_window(SCREEN_TITLE, SCREEN_WIDTH, SCREEN_HEIGHT);
 	Load_imgs();
+	Set_heads_imgs();	
+
 	Load_levels(levels_file_path);
-	/*Set_heads_imgs();*/
+
 }
 
 static void Game_init() {
@@ -72,15 +74,18 @@ static void Clean_up() {
 }
 
 static void Key_up_event(void){
-
+	Draw_background();
+	Draw_img(Get_image(HEROES_NORMAL_IMG), 10, 40);
 }
 
 static void Key_left_event(void){
-
+	Draw_background();
+	Draw_block(GOLD_BLOCK, 30, 200, 50, 40);
 }
 
 static void Key_right_event(void){
-
+	Draw_background();
+	Draw_block(GRAY_BLOCK, 300, 400, 50, 40);
 }
 
 static void Key_restart_level_event(void){
@@ -96,8 +101,6 @@ static void Key_prev_level_event(void){
 }
 
 static void Render(void){
-	Draw_background();
-
 	Update_window();
 }
 
