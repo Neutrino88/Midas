@@ -27,6 +27,9 @@ static void Resource_init(char* levels_file_path) {
 
 static void Game_init() {
 	game_status = GAME_RUNNING;
+	
+	Draw_background();
+	Update_window();
 }
 
 static void Process_events() {
@@ -99,9 +102,10 @@ static void Key_prev_level_event(void){
 }
 
 static void Render(void){
-	Update_window_rect(30, 200, 50, 40);
+	Update_window();
+	/*Update_window_rect(30, 200, 50, 40);
 	Update_window_rect(300, 400, 50, 40);
-	Update_window_rect(10, 40, 50, 50);
+	Update_window_rect(10, 40, 50, 50);*/
 }
 
 static void Load_levels(char* levels_file_path){
