@@ -56,6 +56,7 @@ void CleanUp_imgs(SDL_Surface** images){
 	int i;
 	for(i = 0; i < IMGS_TOTAL; ++i) {
 		if (NULL != images[i]) SDL_FreeSurface(images[i]);
-		images[i] = NULL;
 	}
+
+	free(images);
 }

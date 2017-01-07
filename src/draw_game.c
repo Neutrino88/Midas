@@ -37,3 +37,7 @@ int Draw_background(void){
 int Draw_block(size_t type, int x, int y, size_t w, size_t h){
 	return Draw_rectangle(Get_screen(), type, x, y, w, h);
 }
+
+void CleanUp_images(void){
+	CleanUp_imgs(images);
+}

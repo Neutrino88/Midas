@@ -63,7 +63,7 @@ static void Main_loop() {
 }
 
 static void Clean_up() {
-	/*CleanUp_images();*/
+	CleanUp_images();
 	CleanUp_screen();
 	CleanUp_window();
 

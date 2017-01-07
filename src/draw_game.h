@@ -13,4 +13,6 @@
 	int 			Draw_heroes		(size_t type, int x, int y);
 	int 			Draw_finish		(size_t type, int x, int y);
 	int 			Draw_block		(size_t type, int x, int y, size_t w, size_t h);
+
+	void 			CleanUp_images	(void);
 #endif
