@@ -3,7 +3,7 @@
 #include "draw.h"
 
 int Draw_image(SDL_Surface* dest_surface, SDL_Surface* src_surface, size_t x, size_t y){
-    SDL_Rect 		dest_rect;
+    SDL_Rect dest_rect;
 
     if(dest_surface == NULL || src_surface == NULL) return -1;
 

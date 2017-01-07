@@ -27,9 +27,6 @@ static void Resource_init(char* levels_file_path) {
 
 static void Game_init() {
 	game_status = GAME_RUNNING;
-	
-	Draw_background();
-	Update_window();
 }
 
 static void Process_events() {
@@ -58,6 +55,10 @@ static void Process_events() {
 }
 
 static void Main_loop() {
+
+	Draw_background();
+	Update_window();
+
 	while(GAME_RUNNING == game_status) {
 		Process_events();
 		Render();
@@ -75,18 +76,21 @@ static void Clean_up() {
 }
 
 static void Key_up_event(void){
-	Draw_background();
+	printf("%s",!Draw_background() ? "" : "drawing background error\n");
 	Draw_heroes(HEROES_NORMAL_IMG, 10, 40);
+		Update_window();
 }
 
 static void Key_left_event(void){
-	Draw_background();
+	printf("%s",!Draw_background() ? "" : "drawing background error\n");
 	Draw_block(GOLD_BLOCK, 30, 200, 50, 40);
+		Update_window();
 }
 
 static void Key_right_event(void){
-	Draw_background();
+	printf("%s",!Draw_background() ? "" : "drawing background error\n");
 	Draw_block(GRAY_BLOCK, 300, 400, 50, 40);
+		Update_window();
 }
 
 static void Key_restart_level_event(void){
@@ -102,7 +106,6 @@ static void Key_prev_level_event(void){
 }
 
 static void Render(void){
-	Update_window();
 	/*Update_window_rect(30, 200, 50, 40);
 	Update_window_rect(300, 400, 50, 40);
 	Update_window_rect(10, 40, 50, 50);*/
