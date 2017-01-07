@@ -17,7 +17,6 @@
 		size_t 	 lvls_count;
 	} Levels_t;
 
-
 	Levels_t* 	Read_levels	(char* filename);
 	int 		Write_levels(Levels_t* levels, char* filename);
 #endif
