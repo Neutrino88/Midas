@@ -1,7 +1,9 @@
 #include "stdio.h"
+#include "malloc.h"
+
 #include "images.h"
 #include "phisics.h"
-#include "malloc.h"
+
 
 Coord* head_imgs[PERS_TOTAL];
 Coord* head_blocks;

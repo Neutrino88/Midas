@@ -18,8 +18,26 @@ SDL_Surface* Get_screen(void){
 	return screen;
 }
 
-void Update_window(void){
-	SDL_UpdateWindowSurface(window);
+SDL_Window* Get_window(void){
+	return window;
+}
+
+int Update_window(void){
+	if (NULL == window) return -1;
+	else 				return SDL_UpdateWindowSurface(window);
+}
+
+int Update_window_rect(int x, int y, unsigned int w, unsigned int h){
+	SDL_Rect rect;
+	
+	if (window == NULL) return -1;
+
+	rect.x = x;
+	rect.y = y;
+	rect.w = w;
+	rect.h = h;
+
+	return SDL_UpdateWindowSurfaceRects(window, &rect, 1);
 }
 
 void CleanUp_window(void){
