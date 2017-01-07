@@ -17,7 +17,7 @@ SDL_Surface* Get_image(size_t index){
 }
 
 int Draw_heroes(size_t type, int x, int y){
-	if 		(HEROES_NORMAL_IMG == type)
+	if (HEROES_NORMAL_IMG == type)
 		return Draw_image(Get_screen(), Get_image(HEROES_NORMAL_IMG), x, y);
 	else 
 		return Draw_image(Get_screen(), Get_image(HEROES_GOLD_IMG),   x, y);

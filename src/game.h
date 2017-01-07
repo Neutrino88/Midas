@@ -16,10 +16,10 @@
 		size_t h;
 		float vx;
 		float vy;
-	} Coord;
+	} Coord_t;
 
 void Set_heads_imgs(void);
-Coord* Get_head_img(size_t index);
+Coord_t* Get_head_img(size_t index);
 
 void Move_heroes_on_Ox(int step);
 

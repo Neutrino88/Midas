@@ -5,6 +5,11 @@
 	#define SCREEN_WIDTH 	640
 	#define SCREEN_HEIGHT 	480
 
+	enum {
+		GAME_STOPPING,
+		GAME_RUNNING
+	};	
+
 	/* Initializes all resources*/
 	static void Resource_init	(char* levels_file_path);
 	static void Load_levels		(char* levels_file_path);

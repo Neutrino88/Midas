@@ -3,7 +3,7 @@
 #include "main.h"
 #include "images.h"
 
-static int gameRunning;
+static int game_status;
 
 int main(int argc, char *argv[]) {	
 	if (argc > 1) 	Resource_init(argv[0]);
@@ -18,16 +18,15 @@ int main(int argc, char *argv[]) {
 
 static void Resource_init(char* levels_file_path) {
 	Init_window(SCREEN_TITLE, SCREEN_WIDTH, SCREEN_HEIGHT);
-	/*Load_imgs();
-	Set_heads_imgs();	
-*/
+
 	Init_draw_game();
+	
 	Load_levels(levels_file_path);
 
 }
 
 static void Game_init() {
-	gameRunning = 1;
+	game_status = GAME_RUNNING;
 }
 
 static void Process_events() {
@@ -35,7 +34,7 @@ static void Process_events() {
 	
 	while (SDL_PollEvent(&event))
 		if (event.type == SDL_QUIT){
-			gameRunning = 0;
+			game_status = GAME_STOPPING;
 			break;
 		}
 		else if( event.type == SDL_KEYDOWN ){
@@ -56,7 +55,7 @@ static void Process_events() {
 }
 
 static void Main_loop() {
-	while( gameRunning ) {
+	while(GAME_RUNNING == game_status) {
 		Process_events();
 		Render();
 	}	
@@ -103,9 +102,7 @@ static void Render(void){
 	Update_window_rect(30, 200, 50, 40);
 	Update_window_rect(300, 400, 50, 40);
 	Update_window_rect(10, 40, 50, 50);
-
 }
 
 static void Load_levels(char* levels_file_path){
-	printf("%s\n",levels_file_path);
 }
