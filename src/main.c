@@ -1,9 +1,8 @@
-#include "SDL2/SDL.h"
-#include "main.h"
 #include "application.h"
 #include "images.h"
 #include "draw.h"
-#include "phisics.h"
+#include "game.h"
+#include "main.h"
 
 static int gameRunning;
 

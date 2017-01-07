@@ -1,7 +1,8 @@
-#include "SDL2/SDL.h"
-#include "images.h"
 #include "stdio.h"
+#include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
+
+#include "images.h"
 #include "application.h"
 
 SDL_Surface* images[IMGS_TOTAL];
