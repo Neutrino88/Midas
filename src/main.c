@@ -78,19 +78,19 @@ static void Clean_up() {
 static void Key_up_event(void){
 	printf("%s",!Draw_background() ? "" : "drawing background error\n");
 	Draw_heroes(HEROES_NORMAL_IMG, 10, 40);
-		Update_window();
+	Update_window();
 }
 
 static void Key_left_event(void){
 	printf("%s",!Draw_background() ? "" : "drawing background error\n");
 	Draw_block(GOLD_BLOCK, 30, 200, 50, 40);
-		Update_window();
+	Update_window();
 }
 
 static void Key_right_event(void){
 	printf("%s",!Draw_background() ? "" : "drawing background error\n");
 	Draw_block(GRAY_BLOCK, 300, 400, 50, 40);
-		Update_window();
+	Update_window();
 }
 
 static void Key_restart_level_event(void){

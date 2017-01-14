@@ -49,6 +49,10 @@ int Draw_image_in_every_pixel(SDL_Surface* dest_surface, SDL_Surface*	src_surfac
 
 	screen_width = dest_surface->w;
 
+	dest_rect.y = 0;
+	dest_rect.w = 0;
+	dest_rect.h = 0;
+
 	for (x = 0; x < screen_width; ++x){
 	    dest_rect.x = x;
 		SDL_BlitSurface(src_surface, NULL, dest_surface, &dest_rect);    
