@@ -89,7 +89,7 @@ int Write_levels(Levels_t* levels, char* filename){
 }
 
 void Create_levels(void){
-/*	int i;
+	int i;
 	Levels_t* lvls 	= (Levels_t*)malloc(sizeof(Levels_t));
 	Level_t*  lvl 	= (Level_t*) malloc(sizeof(Level_t));
 
@@ -99,23 +99,24 @@ void Create_levels(void){
 	}
 
 	lvls->lvls_count = 1;
-	 Filling lvl data 
+	/* Filling lvl data */
 	lvl->blocks_count = 5;
 
 	lvl->x = (int*)calloc(sizeof(int), lvl->blocks_count);
 	lvl->y = (int*)calloc(sizeof(int), lvl->blocks_count);
 	lvl->h = (int*)calloc(sizeof(int), lvl->blocks_count);
 	lvl->w = (int*)calloc(sizeof(int), lvl->blocks_count);
+	lvl->types = (int*)calloc(sizeof(int), lvl->blocks_count);
 
 	for (i = 0; i < lvl->blocks_count; ++i){
 		lvl->h[i] = 60;
-		lvl->h[i] = 60;
+		lvl->w[i] = 60;
 		lvl->y[i] = 200;
 		
 		if (0 == i)	lvl->x[0] = 60;
-		else 		lvl->x[i] = lvl->x[i-1] + 60;
+		else 		lvl->x[i] = 60 + lvl->x[i-1];
 
-
+		lvl->types[i] = 1;
 	} 
 
 	lvls->lvls = (Level_t**)malloc(sizeof(Level_t*));
@@ -123,5 +124,4 @@ void Create_levels(void){
 		printf("Allocate memory for lvls->lvls failded!\n");
 		return;
 	}
-*/
 }

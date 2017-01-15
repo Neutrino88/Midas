@@ -3,7 +3,8 @@
 	
 	enum {
 		GOLD_BLOCK,
-		GRAY_BLOCK
+		GRAY_BLOCK,
+		BLUE_BLOCK
 	};
 
 	#define GOLD_COLOR_R 255
@@ -13,6 +14,10 @@
 	#define GRAY_COLOR_R 192
 	#define GRAY_COLOR_G 192
 	#define GRAY_COLOR_B 192
+
+	#define BLUE_COLOR_R 30
+	#define BLUE_COLOR_G 45
+	#define BLUE_COLOR_B 110
 
 	#define BORDER_COLOR_R 0
 	#define BORDER_COLOR_G 0

@@ -37,6 +37,8 @@ int Draw_rectangle(SDL_Surface* dest_surface, size_t block_type, size_t x, size_
 		SDL_FillRect(dest_surface, &rect, SDL_MapRGB(dest_surface->format, GOLD_COLOR_R, GOLD_COLOR_G, GOLD_COLOR_B));
 	if (GRAY_BLOCK == block_type)
 		SDL_FillRect(dest_surface, &rect, SDL_MapRGB(dest_surface->format, GRAY_COLOR_R, GRAY_COLOR_G, GRAY_COLOR_B));
+	if (BLUE_BLOCK == block_type)
+		SDL_FillRect(dest_surface, &rect, SDL_MapRGB(dest_surface->format, BLUE_COLOR_R, BLUE_COLOR_G, BLUE_COLOR_B));
 
 	dest_surface = NULL;
 	return 0;
