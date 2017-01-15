@@ -4,6 +4,9 @@
 
 #include "levels.h"
 
+int levels_number;
+Levels_t* levels = NULL;
+
 Levels_t* Read_levels(char* filename){
     int i;
     Levels_t* levels = (Levels_t*)malloc(sizeof(Levels_t));
@@ -25,14 +28,14 @@ Levels_t* Read_levels(char* filename){
 	for (i = 0; i < levels->lvls_count; ++i){
 		/* Allocating memory for current level variable*/
 		Level_t* level = (Level_t*)malloc(sizeof(Level_t));
-		/* Reading level number and blocks count*/
-		fread( &(level->lvl_number),   sizeof(level->lvl_number),   1, file);
+		/* Reading blocks count*/
 		fread( &(level->blocks_count), sizeof(level->blocks_count), 1, file);
 		/* Allocating memory for x,y,w,h arrays */
 		level->x = (int*)calloc(sizeof(int), level->blocks_count);
 		level->y = (int*)calloc(sizeof(int), level->blocks_count);
 		level->w = (int*)calloc(sizeof(int), level->blocks_count);
 		level->h = (int*)calloc(sizeof(int), level->blocks_count);
+		level->types = 	(int*)calloc(sizeof(int), level->blocks_count);
 
 		if (NULL == level->x || NULL == level->y || NULL == level->w || NULL == level->h)
 			return NULL;
@@ -42,6 +45,7 @@ Levels_t* Read_levels(char* filename){
 		fread(level->y, sizeof(int) * level->blocks_count, 1, file);
 		fread(level->w, sizeof(int) * level->blocks_count, 1, file);
 		fread(level->h, sizeof(int) * level->blocks_count, 1, file);
+		fread(level->types, sizeof(int) * level->blocks_count, 1, file);
 		/* Setting current level in levels variable */
 		levels->lvls[i] = level;
 	}
@@ -69,17 +73,55 @@ int Write_levels(Levels_t* levels, char* filename){
 	for (i = 0; i < levels->lvls_count; ++i){
 		/* Allocating memory for current level variable*/
 		Level_t* level = levels->lvls[i];
-		/* Writing level number and blocks count*/
-		fwrite( &(level->lvl_number),   sizeof(level->lvl_number),   1, file);
+		/* Writing blocks count*/
 		fwrite( &(level->blocks_count), sizeof(level->blocks_count), 1, file);
 		/* Writing x,y,w,h arrays */
 		fwrite(level->x, sizeof(int) * level->blocks_count, 1, file);	
 		fwrite(level->y, sizeof(int) * level->blocks_count, 1, file);
 		fwrite(level->w, sizeof(int) * level->blocks_count, 1, file);
 		fwrite(level->h, sizeof(int) * level->blocks_count, 1, file);
+		fwrite(level->types, sizeof(int) * level->blocks_count, 1, file);
 		/* Destroyed level pointer*/
 		level = NULL;
 	}
 
 	return 0;
+}
+
+void Create_levels(void){
+/*	int i;
+	Levels_t* lvls 	= (Levels_t*)malloc(sizeof(Levels_t));
+	Level_t*  lvl 	= (Level_t*) malloc(sizeof(Level_t));
+
+	if (NULL == lvls || NULL == lvl) {
+		printf("Create_levels failded!\n");
+		return;
+	}
+
+	lvls->lvls_count = 1;
+	 Filling lvl data 
+	lvl->blocks_count = 5;
+
+	lvl->x = (int*)calloc(sizeof(int), lvl->blocks_count);
+	lvl->y = (int*)calloc(sizeof(int), lvl->blocks_count);
+	lvl->h = (int*)calloc(sizeof(int), lvl->blocks_count);
+	lvl->w = (int*)calloc(sizeof(int), lvl->blocks_count);
+
+	for (i = 0; i < lvl->blocks_count; ++i){
+		lvl->h[i] = 60;
+		lvl->h[i] = 60;
+		lvl->y[i] = 200;
+		
+		if (0 == i)	lvl->x[0] = 60;
+		else 		lvl->x[i] = lvl->x[i-1] + 60;
+
+
+	} 
+
+	lvls->lvls = (Level_t**)malloc(sizeof(Level_t*));
+	if (NULL == lvls->lvls){
+		printf("Allocate memory for lvls->lvls failded!\n");
+		return;
+	}
+*/
 }

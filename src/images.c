@@ -39,6 +39,11 @@ void Load_finish_imgs(SDL_Surface** images){
 
 void Load_backgr_imgs(SDL_Surface** images){
 	images[BACKGROUND_IMG] 		= Load_img("img/background.png");
+
+	images[CLOUD_1_IMG] 		= Load_img("img/cloud_1.png");
+	images[CLOUD_2_IMG] 		= Load_img("img/cloud_2.png");
+	images[CLOUD_3_IMG] 		= Load_img("img/cloud_3.png");
+
 }
 
 SDL_Surface** Load_imgs(void){

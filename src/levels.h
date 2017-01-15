@@ -2,15 +2,14 @@
 	#define _LEVELS_H_
 
 	typedef struct {		
-		int* x;
-		int* y;
-		int* w;
-		int* h;
+		int *x;
+		int *y;
+		int *w;
+		int *h;
+		int *types;
 
-		size_t lvl_number;
 		size_t blocks_count;
 	} Level_t;
-
 
 	typedef struct {
 		Level_t** lvls;
@@ -19,4 +18,6 @@
 
 	Levels_t* 	Read_levels	(char* filename);
 	int 		Write_levels(Levels_t* levels, char* filename);
+
+	void 		Create_levels(void);
 #endif

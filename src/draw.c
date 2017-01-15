@@ -7,6 +7,8 @@ int Draw_image(SDL_Surface* dest_surface, SDL_Surface* src_surface, size_t x, si
 
     if(dest_surface == NULL || src_surface == NULL) return -1;
 
+	dest_rect.w = 0;
+	dest_rect.h = 0;
     dest_rect.x = x;
     dest_rect.y = y;
  
