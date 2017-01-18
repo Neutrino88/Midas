@@ -104,17 +104,7 @@ static void Key_next_level_event(void){
 	lvls =  Read_levels("blabla");
 	if (NULL == lvls) printf("%s\n", "Error of Read_levels");
 	else{
-		int i;
-		printf("lvls->lvls_count == %u\n",   lvls->lvls_count);
-		printf("  lvls[0]->blocks  == %u\n", lvls->lvls[0]->blocks_count);
-		for (i = 0; i < 5; ++i) printf("    w[%u] == %u;\n", i, lvls->lvls[0]->w[i]);
-		printf("%s","\n");
-		for (i = 0; i < 5; ++i) printf("    h[%u] == %u;\n", i, lvls->lvls[0]->h[i]);
-		printf("%s","\n");
-		for (i = 0; i < 5; ++i) printf("    x[%u] == %u;\n", i, lvls->lvls[0]->x[i]);
-		printf("%s","\n");
-		for (i = 0; i < 5; ++i) printf("    y[%u] == %u;\n", i, lvls->lvls[0]->y[i]);
-		printf("%s","\n");
+		CleanUp_levels(lvls);
 	}
 
 }

@@ -20,5 +20,5 @@
 	int 		Write_levels(Levels_t* levels, char* filename);
 
 	void 		Create_levels(char* filename);
-	unsigned short ToLittleEndian(unsigned short num);
+	void 		CleanUp_levels(Levels_t* lvls);
 #endif

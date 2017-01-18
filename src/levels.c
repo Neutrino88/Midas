@@ -7,16 +7,6 @@
 int levels_number;
 Levels_t* levels = NULL;
 
-unsigned short ToOtherEndian(unsigned short num){
-    return (num >> 8) | (num % 256 << 8);   
-    /*
-		05 00
-		0000.0101 0000.0000	  LittleEndian
-
-		0000.0000 0000.0101   BigEndian
-    */
-}
-
 Levels_t* Read_levels(char* filename){
     int i;
     FILE* file = NULL;
@@ -32,7 +22,6 @@ Levels_t* Read_levels(char* filename){
 	/* Reading levels count */
 	levels = (Levels_t*)malloc(sizeof(Levels_t));
 	if (NULL == levels) return NULL;
-		
 	fread((void*)&(levels->lvls_count), sizeof(short), 1, file);	
 	
 	/* Allocating memory for levels*/
@@ -145,8 +134,7 @@ void Create_levels(char* filename){
 	}
 	/* Filling lvls data */
 	lvls->lvls[0] = lvl;
-
-	printf("%s\n", Write_levels(lvls, filename) ? "Fail Write_levels" : "Access Write_levels");
+	Write_levels(lvls, filename);
 }
 
 void CleanUp_levels(Levels_t* lvls){
@@ -155,7 +143,17 @@ void CleanUp_levels(Levels_t* lvls){
 	if (NULL == lvls) return;
 
 	for (i = 0; i < lvls->lvls_count; ++i){
+		free(lvls->lvls[i]->types);
+		free(lvls->lvls[i]->x);
+		free(lvls->lvls[i]->y);
+		free(lvls->lvls[i]->h);
+		free(lvls->lvls[i]->w);
+		free(lvls->lvls[i]);
 
+		lvls->lvls[i] = NULL;
 	}
 
+	free(lvls->lvls);
+	free(lvls);
+	lvls = NULL;
 }
