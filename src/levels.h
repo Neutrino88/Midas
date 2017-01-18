@@ -2,22 +2,23 @@
 	#define _LEVELS_H_
 
 	typedef struct {		
-		int *x;
-		int *y;
-		int *w;
-		int *h;
-		int *types;
+		short *x;
+		short *y;
+		short *w;
+		short *h;
+		short *types;
 
-		size_t blocks_count;
+		short blocks_count;
 	} Level_t;
 
 	typedef struct {
 		Level_t** lvls;
-		size_t 	 lvls_count;
+		short lvls_count;
 	} Levels_t;
 
 	Levels_t* 	Read_levels	(char* filename);
 	int 		Write_levels(Levels_t* levels, char* filename);
 
-	void 		Create_levels(void);
+	void 		Create_levels(char* filename);
+	unsigned short ToLittleEndian(unsigned short num);
 #endif
