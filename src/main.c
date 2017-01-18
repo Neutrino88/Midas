@@ -2,7 +2,7 @@
 #include "draw_game.h"
 #include "main.h"
 #include "images.h"
-#include "levels.h"
+#include "phisics.h"
 
 static int game_status;
 
@@ -20,9 +20,8 @@ static void Resource_init(char* levels_file_path) {
 	Init_window(SCREEN_TITLE, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	Init_draw_game();
-	
-	Load_levels(levels_file_path);
 
+	printf("%i\n",Init_phisics("blabla"));
 }
 
 static void Game_init() {
@@ -98,14 +97,14 @@ static void Key_restart_level_event(void){
 }
 
 static void Key_next_level_event(void){
-	Levels_t* lvls = NULL;
+/*	Levels_t* lvls = NULL;
 
 	Create_levels("blabla");
 	lvls =  Read_levels("blabla");
 	if (NULL == lvls) printf("%s\n", "Error of Read_levels");
 	else{
 		CleanUp_levels(lvls);
-	}
+	}*/
 
 }
 
@@ -117,7 +116,4 @@ static void Render(void){
 	Update_window_rect(30, 200, 50, 40);
 	Update_window_rect(300, 400, 50, 40);
 	Update_window_rect(10, 40, 50, 50);
-}
-
-static void Load_levels(char* levels_file_path){
 }

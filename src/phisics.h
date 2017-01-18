@@ -10,7 +10,9 @@
 
 	enum{
 		NORM_TYPE,
-		GOLD_TYPE
+		GOLD_TYPE,
+		BLUE_TYPE,
+		TYPES_TOTAL
 	};
 
 	typedef struct Coord_t{
@@ -18,6 +20,7 @@
 
 		float vx;
 		float vy;
+		float time;
 
 		short type;
 		short x;
@@ -30,6 +33,8 @@ void Set_heads_imgs(void);
 Coord_t* Get_head_img(size_t index);
 
 void Move_heroes_on_Ox(int step);
+int Init_phisics(char* levelsFileName);
+
 
 void CleanUp_heads(void);
 
