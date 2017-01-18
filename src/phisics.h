@@ -4,15 +4,7 @@
 	enum{
 		HEROES_PERS,
 		FINISH_PERS,
-		PROBLEM_PERS,
 		PERS_TOTAL
-	};
-
-	enum{
-		NORM_TYPE,
-		GOLD_TYPE,
-		BLUE_TYPE,
-		TYPES_TOTAL
 	};
 
 	typedef struct Coord_t{

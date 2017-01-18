@@ -1,6 +1,13 @@
 #ifndef _LEVELS_H_
 	#define _LEVELS_H_
 	
+	enum{
+		NORM_TYPE,
+		GOLD_TYPE,
+		BLUE_TYPE,
+		TYPES_TOTAL
+	};
+
 	typedef struct {
 		short x;
 		short y;
@@ -13,7 +20,6 @@
 		short *h;
 		short *types;
 
-		short problem;
 		short blocks_count;
 		Personal_t heroes;
 		Personal_t finish;

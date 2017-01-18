@@ -13,8 +13,8 @@ short	  level_number;
 
 int Init_phisics(char* levelsFileName){
 	int i;
-	int problem;	
 	/* Reading levels */
+	Create_levels("blabla");
 	levels = Read_levels(levelsFileName);
 	if (levels == NULL) return -1;
 	
@@ -38,28 +38,16 @@ int Init_phisics(char* levelsFileName){
 	head_imgs[FINISH_PERS]->y    = levels->lvls[level_number]->finish.y;;
 	head_imgs[FINISH_PERS]->w    = Get_image(FINISH_NORMAL_IMG)->w;
 	head_imgs[FINISH_PERS]->h    = Get_image(FINISH_NORMAL_IMG)->h;
-	head_imgs[FINISH_PERS]->type = GOLD_TYPE;
-
-	problem = levels->lvls[level_number]->problem;
-	head_imgs[PROBLEM_PERS] = (Coord_t*)malloc(sizeof(Coord_t));
-	head_imgs[PROBLEM_PERS]->next = head_imgs[FINISH_PERS];
-	head_imgs[PROBLEM_PERS]->vx   = 0;
-	head_imgs[PROBLEM_PERS]->vy   = 0;
-	head_imgs[PROBLEM_PERS]->x    = levels->lvls[level_number]->x[problem];
-	head_imgs[PROBLEM_PERS]->y    = levels->lvls[level_number]->y[problem];
-	head_imgs[PROBLEM_PERS]->w    = levels->lvls[level_number]->w[problem];
-	head_imgs[PROBLEM_PERS]->h    = levels->lvls[level_number]->h[problem];
-	head_imgs[PROBLEM_PERS]->type = BLUE_TYPE;
+	head_imgs[FINISH_PERS]->type = NORM_TYPE;
 
 	/* Setting head_blocks values */
 	head_blocks = (Coord_t*)malloc(sizeof(Coord_t));
 	if (NULL == head_blocks) return -1;
 
 	for (i = 0; i < levels->lvls[level_number]->blocks_count; ++i)
-		if (i != problem)
-			Add_head_block(levels->lvls[level_number]->x[i], levels->lvls[level_number]->y[i], 
-				           levels->lvls[level_number]->w[i], levels->lvls[level_number]->h[i], 
-				           levels->lvls[level_number]->types[i]);
+		Add_head_block(levels->lvls[level_number]->x[i], levels->lvls[level_number]->y[i], 
+			           levels->lvls[level_number]->w[i], levels->lvls[level_number]->h[i], 
+			           levels->lvls[level_number]->types[i]);
 	return 0;
 }
 
@@ -81,7 +69,6 @@ int Add_head_block(int x, int y, int w, int h, int type){
 	else{
 		new_block->next = head_blocks;
 		head_blocks = new_block;
-		new_block = NULL;
 	}
 
 	return 0;

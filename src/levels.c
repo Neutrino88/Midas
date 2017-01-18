@@ -14,7 +14,6 @@ Levels_t* Read_levels(char* filename){
 		printf("Can't open '%s' for reading!\n", filename);
 		return NULL;
 	}
-
 	/* Reading levels count */
 	levels = (Levels_t*)malloc(sizeof(Levels_t));
 	if (NULL == levels) return NULL;
@@ -31,8 +30,6 @@ Levels_t* Read_levels(char* filename){
 		if (NULL == level)return NULL;
 		/* Reading blocks count*/
 		fread((void*)&(level->blocks_count), sizeof(short), 1, file);
-		/* Reading problem block */
-		fread((void*)&(level->problem), sizeof(short), 1, file);
 		/* Reading info about heroes and finish */
 		fread((void*)&(level->heroes.x), sizeof(short), 1, file);
 		fread((void*)&(level->heroes.y), sizeof(short), 1, file);
@@ -84,8 +81,6 @@ int Write_levels(Levels_t* levels, char* filename){
 		level = levels->lvls[i];
 		/* Writing blocks count*/
 		fwrite((void*)&(level->blocks_count), sizeof(short), 1, file);
-		/* Writing problem block */
-		fwrite((void*)&(level->problem), sizeof(short), 1, file);
 		/* Writing info about heroes and finish */
 		fwrite((void*)&(level->heroes.x), sizeof(short), 1, file);
 		fwrite((void*)&(level->heroes.y), sizeof(short), 1, file);
@@ -117,8 +112,7 @@ void Create_levels(char* filename){
 	}
 
 	/* Filling lvl data */
-	lvl->blocks_count = 5;
-	lvl->problem = 3;
+	lvl->blocks_count = 10;
 
 	lvl->heroes.x = 100;
 	lvl->heroes.y = 100;
@@ -141,6 +135,11 @@ void Create_levels(char* filename){
 
 		lvl->types[i] = 1;
 	} 
+
+	lvl->y[8] = lvl->y[0] + lvl->h[0];
+	lvl->x[8] = lvl->x[0];
+
+
 	/* Allocating memory for lvls->lvls */
 	lvls->lvls_count = 1;
 	lvls->lvls = (Level_t**)malloc(sizeof(Level_t*) * lvls->lvls_count);

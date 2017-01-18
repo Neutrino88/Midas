@@ -24,14 +24,14 @@ int Draw_rectangle(SDL_Surface* dest_surface, size_t block_type, size_t x, size_
 
 	rect.x = x;
 	rect.y = y;
-	rect.w = w;
-	rect.h = h;
+	rect.w = w+1;
+	rect.h = h+1;
 	SDL_FillRect(dest_surface, &rect, SDL_MapRGB(dest_surface->format, BORDER_COLOR_R, BORDER_COLOR_G, BORDER_COLOR_B));
 
 	rect.x = x+1;
 	rect.y = y+1;
-	rect.w = w-2;
-	rect.h = h-2;	
+	rect.w = w-1;
+	rect.h = h-1;	
 	
 	if (GOLD_BLOCK == block_type)
 		SDL_FillRect(dest_surface, &rect, SDL_MapRGB(dest_surface->format, GOLD_COLOR_R, GOLD_COLOR_G, GOLD_COLOR_B));
