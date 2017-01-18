@@ -4,6 +4,7 @@
 	#include "SDL2/SDL.h"
 	#include "stdio.h"
 	#include "draw.h"
+	#include "images.h"
 
 	int 			Init_draw_game	(void);
 

@@ -2,20 +2,28 @@
 	#define _PHISICS_H_
 
 	enum{
-		HEROES,
-		FINISH,
-		PROBLEM,
+		HEROES_PERS,
+		FINISH_PERS,
+		PROBLEM_PERS,
 		PERS_TOTAL
 	};
 
-	typedef struct {
-		size_t type;
-		size_t x;
-		size_t y;
-		size_t w;
-		size_t h;
+	enum{
+		NORM_TYPE,
+		GOLD_TYPE
+	};
+
+	typedef struct Coord_t{
+		struct Coord_t* next;
+
 		float vx;
 		float vy;
+
+		short type;
+		short x;
+		short y;
+		short w;
+		short h;
 	} Coord_t;
 
 void Set_heads_imgs(void);

@@ -1,11 +1,7 @@
-#include "stdio.h"
 #include "stdlib.h"
 #include "malloc.h"
 
 #include "levels.h"
-
-int levels_number;
-Levels_t* levels = NULL;
 
 Levels_t* Read_levels(char* filename){
     int i;
@@ -35,6 +31,13 @@ Levels_t* Read_levels(char* filename){
 		if (NULL == level)return NULL;
 		/* Reading blocks count*/
 		fread((void*)&(level->blocks_count), sizeof(short), 1, file);
+		/* Reading problem block */
+		fread((void*)&(level->problem), sizeof(short), 1, file);
+		/* Reading info about heroes and finish */
+		fread((void*)&(level->heroes.x), sizeof(short), 1, file);
+		fread((void*)&(level->heroes.y), sizeof(short), 1, file);
+		fread((void*)&(level->finish.x), sizeof(short), 1, file);
+		fread((void*)&(level->finish.y), sizeof(short), 1, file);
 		/* Allocating memory for x,y,w,h arrays */
 		level->x = 		(short*)malloc(sizeof(short) * level->blocks_count);
 		level->y = 		(short*)malloc(sizeof(short) * level->blocks_count);
@@ -81,6 +84,13 @@ int Write_levels(Levels_t* levels, char* filename){
 		level = levels->lvls[i];
 		/* Writing blocks count*/
 		fwrite((void*)&(level->blocks_count), sizeof(short), 1, file);
+		/* Writing problem block */
+		fwrite((void*)&(level->problem), sizeof(short), 1, file);
+		/* Writing info about heroes and finish */
+		fwrite((void*)&(level->heroes.x), sizeof(short), 1, file);
+		fwrite((void*)&(level->heroes.y), sizeof(short), 1, file);
+		fwrite((void*)&(level->finish.x), sizeof(short), 1, file);
+		fwrite((void*)&(level->finish.y), sizeof(short), 1, file);
 		/* Writing x,y,w,h arrays */
 		fwrite((void*)level->x, sizeof(short), level->blocks_count, file);	
 		fwrite((void*)level->y, sizeof(short), level->blocks_count, file);
@@ -108,6 +118,12 @@ void Create_levels(char* filename){
 
 	/* Filling lvl data */
 	lvl->blocks_count = 5;
+	lvl->problem = 3;
+
+	lvl->heroes.x = 100;
+	lvl->heroes.y = 100;
+	lvl->finish.x = 300;
+	lvl->finish.y = 100;
 
 	lvl->x =     (short*)calloc(sizeof(short), lvl->blocks_count);
 	lvl->y =     (short*)calloc(sizeof(short), lvl->blocks_count);

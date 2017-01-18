@@ -7,8 +7,7 @@
 static int game_status;
 
 int main(int argc, char *argv[]) {	
-	if (argc > 1) 	Resource_init(argv[0]);
-	else 			Resource_init("levels");
+	Resource_init((argc > 1) ? argv[0] : "levels");
 
 	Game_init();
 	Main_loop();
@@ -70,7 +69,8 @@ static void Clean_up() {
 	CleanUp_screen();
 	CleanUp_window();
 
-	/*CleanUp_heads();*/
+	/*CleanUp_heads();
+	CleanUp_levels();*/
 
 	SDL_Quit();
 }

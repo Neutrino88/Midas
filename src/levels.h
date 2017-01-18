@@ -1,5 +1,10 @@
 #ifndef _LEVELS_H_
 	#define _LEVELS_H_
+	
+	typedef struct {
+		short x;
+		short y;
+	} Personal_t;
 
 	typedef struct {		
 		short *x;
@@ -8,7 +13,10 @@
 		short *h;
 		short *types;
 
+		short problem;
 		short blocks_count;
+		Personal_t heroes;
+		Personal_t finish;
 	} Level_t;
 
 	typedef struct {

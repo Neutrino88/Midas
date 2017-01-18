@@ -1,5 +1,4 @@
 #include "draw_game.h"
-#include "images.h"
 #include "application.h"
 
 SDL_Surface** images = NULL;
