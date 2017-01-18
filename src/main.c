@@ -113,6 +113,9 @@ static void Key_prev_level_event(void){
 }
 
 static void Render(void){
+	Update_screen();
+	Update_window();
+
 	Update_window_rect(30, 200, 50, 40);
 	Update_window_rect(300, 400, 50, 40);
 	Update_window_rect(10, 40, 50, 50);

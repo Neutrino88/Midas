@@ -12,6 +12,7 @@ Levels_t* levels;
 short	  level_number;
 
 int Init_phisics(char* levelsFileName){
+	int i;
 	int problem;	
 	/* Reading levels */
 	levels = Read_levels(levelsFileName);
@@ -54,7 +55,11 @@ int Init_phisics(char* levelsFileName){
 	head_blocks = (Coord_t*)malloc(sizeof(Coord_t));
 	if (NULL == head_blocks) return -1;
 
-
+	for (i = 0; i < levels->lvls[level_number]->blocks_count; ++i)
+		if (i != problem)
+			Add_head_block(levels->lvls[level_number]->x[i], levels->lvls[level_number]->y[i], 
+				           levels->lvls[level_number]->w[i], levels->lvls[level_number]->h[i], 
+				           levels->lvls[level_number]->types[i]);
 	return 0;
 }
 
@@ -81,7 +86,6 @@ int Add_head_block(int x, int y, int w, int h, int type){
 
 	return 0;
 }
-
 
 int Del_head_block(Coord_t* block){
 	Coord_t* cur_block = head_blocks;
@@ -119,4 +123,40 @@ void Restart_level(int l){
 
 void CleanUp_heads(void){
 	
+}
+
+void Update_screen(void){
+	Coord_t* cur = NULL;
+	/* Drawing background */
+	Draw_background();
+	/* Drawing heroes */
+	if (head_imgs[HEROES_PERS]->type == NORM_TYPE) 
+		Draw_heroes(HEROES_NORMAL_IMG, 
+			        head_imgs[HEROES_PERS]->x, 
+			        head_imgs[HEROES_PERS]->y);
+	else if (head_imgs[HEROES_PERS]->type == GOLD_TYPE) 
+		Draw_heroes(HEROES_GOLD_IMG, 
+			        head_imgs[HEROES_PERS]->x, 
+			        head_imgs[HEROES_PERS]->y);
+
+	/* Drawing finish */
+	if (head_imgs[FINISH_PERS]->type == NORM_TYPE) 
+		Draw_finish(FINISH_NORMAL_IMG, 
+			        head_imgs[FINISH_PERS]->x, 
+			        head_imgs[FINISH_PERS]->y);
+	else if (head_imgs[FINISH_PERS]->type == GOLD_TYPE) 
+		Draw_finish(FINISH_GOLD_IMG, 
+			        head_imgs[FINISH_PERS]->x, 
+			        head_imgs[FINISH_PERS]->y);
+
+	/* Drawing blocks */
+	cur = head_blocks;
+	while(cur != NULL){
+		if      (cur->type == NORM_TYPE) 
+			Draw_block(GRAY_BLOCK, cur->x, cur->y, cur->w, cur->h);
+		else if (cur->type == GOLD_TYPE) 
+			Draw_block(GOLD_BLOCK, cur->x, cur->y, cur->w, cur->h);
+
+		cur = cur->next;
+	}
 }
