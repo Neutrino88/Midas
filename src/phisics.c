@@ -114,14 +114,28 @@ int Max_hor_step(Coord_t* one, int stepX, Coord_t* two){
 		if (one->x + stepX < two->x && one->x + one->w - 1 + stepX > two->x) 
 			return two->x - (one->x + one->w - 1);
 	if (stepX < 0)
-		if (one->x + stepX < two->x + two->w - 1 && one->x + one->w - 1 + stepX > two->x + two->w - 1) 
-			return one->x - (two->x + two->w - 1);
+		if (one->x + stepX < two->x + two->w && one->x + one->w - 1 + stepX > two->x + two->w) 
+			return one->x - (two->x + two->w);
 
 	return stepX;
 }
 
 int Max_ver_step(Coord_t* one, int stepY, Coord_t* two){
-	return 0;
+	/* 	return max step which first object can do on the vertical axis */
+
+	/* If objects be on different width */
+	if (one->x > two->x + two->w - 1) return stepY; 
+	if (one->x + one->w - 1 < two->x) return stepY;
+	/*  */
+
+	if (stepY > 0)
+		if (one->y + stepY < two->y + two->h - 1 && one->y + one->h - 1 + stepY > two->y + two->h -1) 
+			return one->y - (two->y + two->h - 1);
+	if (stepY < 0)
+		if (one->y < two->y && one->y + one->h - 1 + stepY > two->y) 
+			return two->y - (one->y + one->h);
+
+	return stepY;
 }
 
 void Move_heroes_on_ox(int step){
@@ -138,6 +152,24 @@ void Move_heroes_on_ox(int step){
 	if (step < 0) head_imgs[HEROES_PERS]->x -= max_way;
 	else 		  head_imgs[HEROES_PERS]->x += max_way;
 }
+/*
+void Detection_gold_blocks(void){
+	Coord_t* cur = head_blocks;
+
+	while (NULL != cur){*/
+		/* detection blocks which top */
+		/*if (one->y > two->y + two->h - 1 || one->y + one->h - 1 < two->y) return stepX;
+		if (cur->)
+*/
+
+		/* To next block */
+		/*cur = cur ->next;
+	}
+}
+
+void Сollision_detection(void){
+	Detection_gold_blocks(); 
+}*/
 
 void Restart_level(int l){
 

@@ -29,28 +29,22 @@ static void Game_init() {
 }
 
 static void Process_events() {
-	SDL_Event event;
-	
-	while (SDL_PollEvent(&event))
-		if (event.type == SDL_QUIT){
-			game_status = GAME_STOPPING;
-			break;
-		}
-		else if( event.type == SDL_KEYDOWN ){
-			SDL_Keycode keycode = event.key.keysym.sym;
+	SDL_Event event;	/* Event handler */
+	const Uint8* curKey = SDL_GetKeyboardState( NULL );
 
-			if 		(keycode == SDLK_UP    	|| keycode == SDLK_w)	Key_up_event();
-			else if (keycode == SDLK_LEFT  	|| keycode == SDLK_a)	Key_left_event();
-            else if (keycode == SDLK_RIGHT 	|| keycode == SDLK_d)	Key_right_event();
-            else if (keycode == SDLK_1 		|| keycode == SDLK_q)	Key_prev_level_event();
-            else if (keycode == SDLK_3 		|| keycode == SDLK_e)	Key_next_level_event();
-            else if (keycode == SDLK_2 		|| keycode == SDLK_r)	Key_restart_level_event();
-			else {
-				/*
-				do nothing
-				 */
-			}
-		}
+	while( SDL_PollEvent( &event ) != 0 ) { 
+		if(event.type == SDL_QUIT) { 
+			game_status = GAME_STOPPING;
+			return;
+		} 
+	}	
+
+	if (curKey[SDL_SCANCODE_UP]		|| curKey[SDL_SCANCODE_W])	Key_up_event();
+	if (curKey[SDL_SCANCODE_LEFT]	|| curKey[SDL_SCANCODE_A])	Key_left_event();
+    if (curKey[SDL_SCANCODE_RIGHT]	|| curKey[SDL_SCANCODE_D])	Key_right_event();
+    if (curKey[SDL_SCANCODE_1]		|| curKey[SDL_SCANCODE_Q])	Key_prev_level_event();
+    if (curKey[SDL_SCANCODE_3]		|| curKey[SDL_SCANCODE_E])	Key_next_level_event();
+    if (curKey[SDL_SCANCODE_2]		|| curKey[SDL_SCANCODE_R])	Key_restart_level_event();
 }
 
 static void Main_loop() {
@@ -79,11 +73,11 @@ static void Key_up_event(void){
 }
 
 static void Key_left_event(void){
-	Move_heroes_on_ox(-3);
+	Move_heroes_on_ox(-1);
 }
 
 static void Key_right_event(void){
-	Move_heroes_on_ox(3);
+	Move_heroes_on_ox(1);
 }
 
 static void Key_restart_level_event(void){
