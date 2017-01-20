@@ -1,6 +1,9 @@
 #ifndef _PHISICS_H_
 	#define _PHISICS_H_
 
+	#define max(a, b) (a > b ? a : b)
+	#define min(a, b) (a < b ? a : b)
+	
 	enum{
 		HEROES_PERS,
 		FINISH_PERS,
@@ -24,7 +27,7 @@
 void Set_heads_imgs(void);
 Coord_t* Get_head_img(size_t index);
 
-void Move_heroes_on_Ox(int step);
+void Move_heroes_on_ox(int step);
 int Init_phisics(char* levelsFileName);
 
 int Add_head_block(int x, int y, int w, int h, int type);

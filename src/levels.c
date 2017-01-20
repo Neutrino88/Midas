@@ -114,8 +114,8 @@ void Create_levels(char* filename){
 	/* Filling lvl data */
 	lvl->blocks_count = 10;
 
-	lvl->heroes.x = 100;
-	lvl->heroes.y = 100;
+	lvl->heroes.x = 550;
+	lvl->heroes.y = 200;
 	lvl->finish.x = 300;
 	lvl->finish.y = 100;
 
@@ -133,12 +133,12 @@ void Create_levels(char* filename){
 		if (0 == i)	lvl->x[0] = 60;
 		else 		lvl->x[i] = 60 + lvl->x[i-1];
 
-		lvl->types[i] = 1;
+		lvl->types[i] = NORM_TYPE;
 	} 
 
 	lvl->y[8] = lvl->y[0] + lvl->h[0];
 	lvl->x[8] = lvl->x[0];
-
+	lvl->types[9] = BLUE_TYPE;
 
 	/* Allocating memory for lvls->lvls */
 	lvls->lvls_count = 1;

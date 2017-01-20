@@ -41,18 +41,18 @@ int Init_phisics(char* levelsFileName){
 	head_imgs[FINISH_PERS]->type = NORM_TYPE;
 
 	/* Setting head_blocks values */
-	head_blocks = (Coord_t*)malloc(sizeof(Coord_t));
-	if (NULL == head_blocks) return -1;
 
 	for (i = 0; i < levels->lvls[level_number]->blocks_count; ++i)
-		Add_head_block(levels->lvls[level_number]->x[i], levels->lvls[level_number]->y[i], 
-			           levels->lvls[level_number]->w[i], levels->lvls[level_number]->h[i], 
+		Add_head_block(levels->lvls[level_number]->x[i], 
+					   levels->lvls[level_number]->y[i], 
+			           levels->lvls[level_number]->w[i], 
+			           levels->lvls[level_number]->h[i], 
 			           levels->lvls[level_number]->types[i]);
 	return 0;
 }
 
 int Add_head_block(int x, int y, int w, int h, int type){
-	Coord_t* new_block = (Coord_t*)malloc(sizeof(Coord_t));
+	Coord_t* new_block = (Coord_t*)calloc(sizeof(Coord_t), 1);
 	if (new_block == NULL) return -1;
 
 	new_block->x = x;
@@ -65,7 +65,10 @@ int Add_head_block(int x, int y, int w, int h, int type){
 	new_block->type = type;
 	new_block->next = NULL;
 
-	if (NULL == head_blocks) head_blocks = new_block;
+	if (NULL == head_blocks){
+		head_blocks = new_block;
+		head_blocks->next = NULL;
+	}
 	else{
 		new_block->next = head_blocks;
 		head_blocks = new_block;
@@ -94,14 +97,46 @@ int Del_head_block(Coord_t* block){
 	return 0;
 }
 
-
 Coord_t* Get_head_img(size_t index){
 	if (index < PERS_TOTAL) return head_imgs[index];
 	else 					return NULL;
 }
 
-void Move_heroes_on_Ox(int step){
+int Max_hor_step(Coord_t* one, int stepX, Coord_t* two){
+	/* 	return max step which first object can do on the horizontal axis */
 
+	/* If objects be on different height */
+	if (one->y > two->y + two->h - 1) return stepX; 
+	if (one->y + one->h - 1 < two->y) return stepX;
+	/*  */
+
+	if (stepX > 0)
+		if (one->x + stepX < two->x && one->x + one->w - 1 + stepX > two->x) 
+			return two->x - (one->x + one->w - 1);
+	if (stepX < 0)
+		if (one->x + stepX < two->x + two->w - 1 && one->x + one->w - 1 + stepX > two->x + two->w - 1) 
+			return one->x - (two->x + two->w - 1);
+
+	return stepX;
+}
+
+int Max_ver_step(Coord_t* one, int stepY, Coord_t* two){
+	return 0;
+}
+
+void Move_heroes_on_ox(int step){
+	int max_way = step;
+	Coord_t* cur_block = head_blocks;
+
+	while (NULL != cur_block->next && NULL != cur_block){
+		max_way = min(abs(Max_hor_step(head_imgs[HEROES_PERS], step, cur_block)), abs(max_way));
+
+		if (NULL != cur_block->next)
+			cur_block = cur_block ->next;
+	}
+
+	if (step < 0) head_imgs[HEROES_PERS]->x -= max_way;
+	else 		  head_imgs[HEROES_PERS]->x += max_way;
 }
 
 void Restart_level(int l){
@@ -143,6 +178,8 @@ void Update_screen(void){
 			Draw_block(GRAY_BLOCK, cur->x, cur->y, cur->w, cur->h);
 		else if (cur->type == GOLD_TYPE) 
 			Draw_block(GOLD_BLOCK, cur->x, cur->y, cur->w, cur->h);
+		else if (cur->type == BLUE_TYPE) 
+			Draw_block(BLUE_BLOCK, cur->x, cur->y, cur->w, cur->h);
 
 		cur = cur->next;
 	}
