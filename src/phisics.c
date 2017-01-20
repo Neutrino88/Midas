@@ -106,9 +106,7 @@ int Max_hor_step(Coord_t* one, int stepX, Coord_t* two){
 	/* 	return max step which first object can do on the horizontal axis */
 
 	/* If objects be on different height */
-	if (one->y > two->y + two->h - 1) return stepX; 
-	if (one->y + one->h - 1 < two->y) return stepX;
-	/*  */
+	if (!On_one_hor_line(one, two)) return stepX; 
 
 	if (stepX > 0)
 		if (one->x + stepX < two->x && one->x + one->w - 1 + stepX > two->x) 
@@ -124,8 +122,7 @@ int Max_ver_step(Coord_t* one, int stepY, Coord_t* two){
 	/* 	return max step which first object can do on the vertical axis */
 
 	/* If objects be on different width */
-	if (one->x > two->x + two->w - 1) return stepY; 
-	if (one->x + one->w - 1 < two->x) return stepY;
+	if (!On_one_ver_line(one, two)) return stepY; 
 	/*  */
 
 	if (stepY > 0)
@@ -136,6 +133,34 @@ int Max_ver_step(Coord_t* one, int stepY, Coord_t* two){
 			return two->y - (one->y + one->h);
 
 	return stepY;
+}
+
+int On_one_hor_line(Coord_t* one, Coord_t* two){
+/* 
+	return -1:
+		if first object have vertical projection on second object
+	return 0:
+		else
+ */
+
+	if (two->y > one->y && 
+		two->y < one->y + one->h - 1) return 0;
+	if (one->y > two->y && 
+		one->y < two->y + two->h - 1) return 0;
+	return !0;
+}
+
+int On_one_ver_line(Coord_t* one, Coord_t* two){
+	/* 	return -1:
+		if first object have horizontal projection on second object
+	return 0:
+		else
+ */
+	if (two->x > one->x && 
+		two->x < one->x + one->w - 1) return 0;
+	if (one->x > two->x && 
+		one->x < two->x + two->w - 1) return 0;
+	return !0;
 }
 
 void Move_heroes_on_ox(int step){
@@ -154,16 +179,21 @@ void Move_heroes_on_ox(int step){
 }
 /*
 void Detection_gold_blocks(void){
-	Coord_t* cur = head_blocks;
+	Coord_t* cur = head_blocks;				 current block */
+	/*Coord_t* her = head_imgs[HEROES_PERS];*/	/* heroes */
+/*
+	while (NULL != cur){
+		 detection blocks which top 
 
-	while (NULL != cur){*/
-		/* detection blocks which top */
-		/*if (one->y > two->y + two->h - 1 || one->y + one->h - 1 < two->y) return stepX;
-		if (cur->)
-*/
+		if (her->y == cur->y && 
+			her->y + her->h - 1 == cur->y) {
 
-		/* To next block */
-		/*cur = cur ->next;
+
+		}
+
+
+		 To next block */
+	/*	cur = cur ->next;
 	}
 }
 

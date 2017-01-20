@@ -31,6 +31,10 @@ Coord_t* Get_head_img(size_t index);
 void Move_heroes_on_ox(int step);
 int Init_phisics(char* levelsFileName);
 
+int On_one_hor_line(Coord_t* one, Coord_t* two);
+int On_one_ver_line(Coord_t* one, Coord_t* two);
+
+
 int Add_head_block(int x, int y, int w, int h, int type);
 int Del_head_block(Coord_t* block);
 void Update_screen(void);
