@@ -114,8 +114,8 @@ void Create_levels(char* filename){
 	/* Filling lvl data */
 	lvl->blocks_count = 10;
 
-	lvl->heroes.x = 550;
-	lvl->heroes.y = 200;
+	lvl->heroes.x = 0;
+	lvl->heroes.y = 210;
 	lvl->finish.x = 300;
 	lvl->finish.y = 100;
 

@@ -74,10 +74,16 @@ static void Key_up_event(void){
 
 static void Key_left_event(void){
 	Move_heroes_on_ox(-1);
+
+	Collision_detection();
+
 }
 
 static void Key_right_event(void){
 	Move_heroes_on_ox(1);
+
+	Collision_detection();
+
 }
 
 static void Key_restart_level_event(void){
