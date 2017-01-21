@@ -34,6 +34,7 @@ int Init_phisics(char* levelsFileName);
 int On_one_hor_line(Coord_t* one, Coord_t* two);
 int On_one_ver_line(Coord_t* one, Coord_t* two);
 
+void Detection_heroes_to_normal_type(void);
 void Detection_gold_blocks(void);
 void Collision_detection(void);
 

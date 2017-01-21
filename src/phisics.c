@@ -208,8 +208,38 @@ void Detection_gold_blocks(void){
 	}
 }
 
+void Detection_heroes_to_normal_type(void){
+	Coord_t* cur = head_blocks;				/* current block */
+	Coord_t* her = head_imgs[HEROES_PERS];	/* heroes */
+
+	/* if heroes is normal */
+	if (NORM_TYPE == her->type) return;
+
+	while (NULL != cur){
+		/* if current block isn't blue */ 
+		if (BLUE_TYPE != cur->type) {
+			cur = cur->next;
+			continue;
+		}
+
+		/* detection of blocks which top */
+		if ( (On_one_ver_line(her, cur) && her->y == cur->y + cur->h + 1) ||
+		/* detection of blocks which botton */
+		     (On_one_ver_line(her, cur) && her->y + her->h - 1 == cur->y) ||
+		/* detection of blocks which to the left */
+		     (On_one_hor_line(her, cur) && her->x == cur->x + cur->w) ||
+		/* detection of blocks which to the right */
+		     (On_one_hor_line(her, cur) && her->x + her->w - 1 == cur->x) )
+		     her->type = NORM_TYPE;
+
+		/* To next block */
+		cur = cur->next;
+	}
+}
+
 void Collision_detection(void){
 	Detection_gold_blocks();
+	Detection_heroes_to_normal_type();
 }
 
 void Restart_level(int l){
