@@ -7,7 +7,8 @@
 
 	enum {
 		GAME_STOPPING,
-		GAME_RUNNING
+		GAME_RUNNING,
+		GAME_OVER
 	};	
 
 	/* Initializes all resources*/

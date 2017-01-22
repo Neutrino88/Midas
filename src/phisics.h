@@ -34,14 +34,17 @@ int Init_phisics(char* levelsFileName);
 int On_one_hor_line(Coord_t* one, Coord_t* two);
 int On_one_ver_line(Coord_t* one, Coord_t* two);
 
+void Detection_finish_to_gold_type(void);
 void Detection_heroes_to_normal_type(void);
 void Detection_gold_blocks(void);
 void Collision_detection(void);
 
 int Add_head_block(int x, int y, int w, int h, int type);
-int Del_head_block(Coord_t* block);
+void Del_head_block(Coord_t* block);
 void Update_screen(void);
 
 void CleanUp_heads(void);
 
+int Restart_level(int level_number);
+int Game_over(void);
 #endif

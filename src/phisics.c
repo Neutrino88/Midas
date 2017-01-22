@@ -12,42 +12,11 @@ Levels_t* levels;
 short	  level_number;
 
 int Init_phisics(char* levelsFileName){
-	int i;
 	/* Reading levels */
-	Create_levels("blabla");
 	levels = Read_levels(levelsFileName);
-	if (levels == NULL) return -1;
-	
+	if (levels == NULL) return !0;
+
 	level_number = 0;
-	/* Setting head_img values */
-	head_imgs[HEROES_PERS] = (Coord_t*)malloc(sizeof(Coord_t));
-	head_imgs[HEROES_PERS]->next = NULL;
-	head_imgs[HEROES_PERS]->vx   = 0;
-	head_imgs[HEROES_PERS]->vy   = 0;
-	head_imgs[HEROES_PERS]->x    = levels->lvls[level_number]->heroes.x;
-	head_imgs[HEROES_PERS]->y    = levels->lvls[level_number]->heroes.y;;
-	head_imgs[HEROES_PERS]->w    = Get_image(HEROES_GOLD_IMG)->w;
-	head_imgs[HEROES_PERS]->h    = Get_image(HEROES_GOLD_IMG)->h;
-	head_imgs[HEROES_PERS]->type = GOLD_TYPE;
-
-	head_imgs[FINISH_PERS]  = (Coord_t*)malloc(sizeof(Coord_t));
-	head_imgs[FINISH_PERS]->next = head_imgs[HEROES_PERS];
-	head_imgs[FINISH_PERS]->vx   = 0;
-	head_imgs[FINISH_PERS]->vy   = 0;
-	head_imgs[FINISH_PERS]->x    = levels->lvls[level_number]->finish.x;
-	head_imgs[FINISH_PERS]->y    = levels->lvls[level_number]->finish.y;;
-	head_imgs[FINISH_PERS]->w    = Get_image(FINISH_NORMAL_IMG)->w;
-	head_imgs[FINISH_PERS]->h    = Get_image(FINISH_NORMAL_IMG)->h;
-	head_imgs[FINISH_PERS]->type = NORM_TYPE;
-
-	/* Setting head_blocks values */
-
-	for (i = 0; i < levels->lvls[level_number]->blocks_count; ++i)
-		Add_head_block(levels->lvls[level_number]->x[i], 
-					   levels->lvls[level_number]->y[i], 
-			           levels->lvls[level_number]->w[i], 
-			           levels->lvls[level_number]->h[i], 
-			           levels->lvls[level_number]->types[i]);
 	return 0;
 }
 
@@ -77,10 +46,13 @@ int Add_head_block(int x, int y, int w, int h, int type){
 	return 0;
 }
 
-int Del_head_block(Coord_t* block){
+void Del_head_block(Coord_t* block){
 	Coord_t* cur_block = head_blocks;
 
-	if (head_blocks == block){
+	if (NULL == block){
+		return;
+	}
+	else if (head_blocks == block){
 		head_blocks = block->next;
 		free(block);
 	}
@@ -93,8 +65,6 @@ int Del_head_block(Coord_t* block){
 			free(block);
 		}
 	}
-
-	return 0;
 }
 
 Coord_t* Get_head_img(size_t index){
@@ -237,17 +207,86 @@ void Detection_heroes_to_normal_type(void){
 	}
 }
 
+void Detection_finish_to_gold_type(void){
+	Coord_t* fin = head_imgs[FINISH_PERS];	/* current block */
+	Coord_t* her = head_imgs[HEROES_PERS];	/* heroes */
+
+	/* if heroes is normal or finish is gold then return*/
+	if (NORM_TYPE == her->type) return;
+	if (GOLD_TYPE == fin->type) return;
+
+	/* detection of blocks which top */
+	if ( (On_one_ver_line(her, fin) && her->y == fin->y + fin->h + 1) ||
+	/* detection of blocks which botton */
+	     (On_one_ver_line(her, fin) && her->y + her->h - 1 == fin->y) ||
+	/* detection of blocks which to the left */
+	     (On_one_hor_line(her, fin) && her->x == fin->x + fin->w) ||
+	/* detection of blocks which to the right */
+	     (On_one_hor_line(her, fin) && her->x + her->w - 1 == fin->x) )
+	     fin->type = GOLD_TYPE;
+}
+
 void Collision_detection(void){
 	Detection_gold_blocks();
 	Detection_heroes_to_normal_type();
+	Detection_finish_to_gold_type();
 }
 
-void Restart_level(int l){
+int Restart_level(int lvl_number){
+	int i;
+	/* Cleaning heads*/
+	CleanUp_heads();
 
+	/* Setting level number */
+	if 		(-3 == lvl_number) --level_number;	
+	else if (-2 == lvl_number) ++level_number;
+	else if (-1 != lvl_number) level_number = lvl_number;
+
+	level_number = level_number % levels->lvls_count;
+
+	/* Setting head_img values */
+	head_imgs[HEROES_PERS] = (Coord_t*)malloc(sizeof(Coord_t));
+	head_imgs[HEROES_PERS]->next = NULL;
+	head_imgs[HEROES_PERS]->vx   = 0;
+	head_imgs[HEROES_PERS]->vy   = 0;
+	head_imgs[HEROES_PERS]->x    = levels->lvls[level_number]->heroes.x;
+	head_imgs[HEROES_PERS]->y    = levels->lvls[level_number]->heroes.y;;
+	head_imgs[HEROES_PERS]->w    = Get_image(HEROES_GOLD_IMG)->w;
+	head_imgs[HEROES_PERS]->h    = Get_image(HEROES_GOLD_IMG)->h;
+	head_imgs[HEROES_PERS]->type = GOLD_TYPE;
+
+	head_imgs[FINISH_PERS] = (Coord_t*)malloc(sizeof(Coord_t));
+	head_imgs[FINISH_PERS]->next = NULL;
+	head_imgs[FINISH_PERS]->vx   = 0;
+	head_imgs[FINISH_PERS]->vy   = 0;
+	head_imgs[FINISH_PERS]->x    = levels->lvls[level_number]->finish.x;
+	head_imgs[FINISH_PERS]->y    = levels->lvls[level_number]->finish.y;;
+	head_imgs[FINISH_PERS]->w    = Get_image(FINISH_NORMAL_IMG)->w;
+	head_imgs[FINISH_PERS]->h    = Get_image(FINISH_NORMAL_IMG)->h;
+	head_imgs[FINISH_PERS]->type = NORM_TYPE;
+
+
+	/* Setting head_blocks values */
+	for (i = 0; i < levels->lvls[level_number]->blocks_count; ++i)
+		Add_head_block(levels->lvls[level_number]->x[i], 
+					   levels->lvls[level_number]->y[i], 
+			           levels->lvls[level_number]->w[i], 
+			           levels->lvls[level_number]->h[i], 
+			           levels->lvls[level_number]->types[i]);
+
+	return 0;
 }
 
 void CleanUp_heads(void){
-	
+	/* CleanUp head_imgs */
+	int i;
+	for (i = 0; i < PERS_TOTAL; ++i)
+		if (NULL != head_imgs[i]) free(head_imgs[i]);
+
+	/* CleanUp head_blocks variable */
+	while (NULL != head_blocks){
+		Del_head_block(head_blocks);
+	}
 }
 
 void Update_screen(void){
@@ -286,4 +325,11 @@ void Update_screen(void){
 
 		cur = cur->next;
 	}
+}
+
+int Game_over(void){
+	if (GOLD_TYPE == Get_head_img(FINISH_PERS)->type) 
+		return !0;
+
+	return 0;
 }
