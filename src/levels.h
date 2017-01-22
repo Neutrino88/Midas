@@ -32,7 +32,9 @@
 
 	Levels_t* 	Read_levels	(char* filename);
 	int 		Write_levels(Levels_t* levels, char* filename);
-
-	void 		Create_levels(char* filename);
 	void 		CleanUp_levels(Levels_t* lvls);
+
+	Level_t* 	Create_lvl_0(void);
+	Level_t* 	Create_lvl_1(void);
+	void 		Create_levels(char* filename);
 #endif

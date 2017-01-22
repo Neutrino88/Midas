@@ -26,6 +26,7 @@
 	static void Key_next_level_event(void);
 	static void Key_prev_level_event(void);
 	static void Key_restart_level_event	(void);
+	static void Timer_event(void);
 
 	static void Render(void);
 #endif   

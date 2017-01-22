@@ -9,9 +9,10 @@ Coord_t* head_imgs[PERS_TOTAL];
 Coord_t* head_blocks;
 
 Levels_t* levels;
-short	  level_number;
+int	level_number;
 
 int Init_phisics(char* levelsFileName){
+	Create_levels("levels_2");
 	/* Reading levels */
 	levels = Read_levels(levelsFileName);
 	if (levels == NULL) return !0;
@@ -82,12 +83,12 @@ int Max_hor_step(Coord_t* one, int stepX, Coord_t* two){
 		one->x + stepX < two->x && 
 		one->x + one->w - 1 + stepX > two->x) 
 			return two->x - (one->x + one->w - 1);
-	else if (stepX < 0 &&
+	if (stepX < 0 &&
 		one->x + stepX < two->x + two->w && 
 		one->x + one->w - 1 + stepX > two->x + two->w) 
 			return one->x - (two->x + two->w);
-	else
-		return stepX;
+	
+	return stepX;
 }
 
 int Max_ver_step(Coord_t* one, int stepY, Coord_t* two){
@@ -95,15 +96,16 @@ int Max_ver_step(Coord_t* one, int stepY, Coord_t* two){
 
 	/* If objects be on different width */
 	if (!On_one_ver_line(one, two)) return stepY; 
-	/*  */
 
-	if (stepY > 0)
-		if (one->y + stepY < two->y + two->h - 1 && one->y + one->h - 1 + stepY > two->y + two->h -1) 
+	if (stepY > 0 &&
+		one->y + stepY < two->y + two->h - 1 && 
+		one->y + one->h - 1 + stepY > two->y + two->h -1) 
 			return one->y - (two->y + two->h - 1);
-	if (stepY < 0)
-		if (one->y < two->y && one->y + one->h - 1 + stepY > two->y) 
+	if (stepY < 0 &&
+		one->y < two->y && 
+		one->y + one->h - 1 + stepY > two->y) 
 			return two->y - (one->y + one->h);
-
+	
 	return stepY;
 }
 
@@ -139,11 +141,14 @@ void Move_heroes_on_ox(int step){
 	int max_way = step;
 	Coord_t* cur_block = head_blocks;
 
+	/* Detection collision heroes and blocks */
 	while (NULL != cur_block){
 		max_way = min(abs(Max_hor_step(head_imgs[HEROES_PERS], step, cur_block)), abs(max_way));
 
 		cur_block = cur_block ->next;
 	}
+	/* Detection collision heroes and finish  */
+	max_way = min(abs(Max_hor_step(head_imgs[HEROES_PERS], step, head_imgs[FINISH_PERS])), abs(max_way));
 
 	if (step < 0) head_imgs[HEROES_PERS]->x -= max_way;
 	else 		  head_imgs[HEROES_PERS]->x += max_way;
@@ -238,11 +243,14 @@ int Restart_level(int lvl_number){
 	CleanUp_heads();
 
 	/* Setting level number */
-	if 		(-3 == lvl_number) --level_number;	
-	else if (-2 == lvl_number) ++level_number;
-	else if (-1 != lvl_number) level_number = lvl_number;
+	if 		(-3 == lvl_number && level_number > 0) 
+		--level_number;	
+	else if (-2 == lvl_number && level_number < levels->lvls_count) 
+		++level_number;
+	else if (-1 != lvl_number) 
+		level_number = lvl_number;
 
-	level_number = level_number % levels->lvls_count;
+	level_number = abs(level_number % levels->lvls_count);
 
 	/* Setting head_img values */
 	head_imgs[HEROES_PERS] = (Coord_t*)malloc(sizeof(Coord_t));
@@ -273,7 +281,6 @@ int Restart_level(int lvl_number){
 			           levels->lvls[level_number]->w[i], 
 			           levels->lvls[level_number]->h[i], 
 			           levels->lvls[level_number]->types[i]);
-
 	return 0;
 }
 

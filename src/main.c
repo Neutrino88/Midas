@@ -5,9 +5,10 @@
 #include "phisics.h"
 
 static int game_status;
+static Uint32 moveEventTime, lvlEventTime, phisicsEventTime, curTime;	/* program need this values for organization timers */
 
 int main(int argc, char *argv[]) {	
-	Resource_init((argc > 1) ? argv[0] : "levels");
+	Resource_init((argc > 1) ? argv[1] : "levels");
 
 	Game_init();
 	Main_loop();
@@ -26,37 +27,52 @@ static void Resource_init(char* levels_file_path) {
 }
 
 static void Game_init(void) {
+	moveEventTime 	 = SDL_GetTicks();
+	lvlEventTime  	 = moveEventTime;
+	phisicsEventTime = moveEventTime;
+	
 	game_status = GAME_RUNNING;
 }
 
 static void Process_events(void) {
-	SDL_Event event;	/* Event handler */
+	SDL_Event event;		/* Event handler */
+	SDL_Keycode keycode;
 	const Uint8* curKey = SDL_GetKeyboardState( NULL );
 
+	curTime = SDL_GetTicks();
 	while( SDL_PollEvent( &event ) != 0 ) { 
+		keycode = event.key.keysym.sym;
+
 		if(event.type == SDL_QUIT) { 
 			game_status = GAME_OVER;
 			return;
 		} 
+
+		if (curTime - lvlEventTime >= 200){
+			lvlEventTime = curTime;
+
+			if (keycode == SDLK_1 		|| keycode == SDLK_q)	Key_prev_level_event();	
+	        if (keycode == SDLK_3 		|| keycode == SDLK_e)	Key_next_level_event();	
+	        if (keycode == SDLK_2 		|| keycode == SDLK_r)	Key_restart_level_event();
+	    }
 	}
 
-	if (GAME_RUNNING == game_status){
+	if ((GAME_RUNNING == game_status) && (curTime - moveEventTime >= 20)){
+		moveEventTime = curTime;
+
 		if (curKey[SDL_SCANCODE_UP]		|| curKey[SDL_SCANCODE_W])	Key_up_event();
 		if (curKey[SDL_SCANCODE_LEFT]	|| curKey[SDL_SCANCODE_A])	Key_left_event();
-	    if (curKey[SDL_SCANCODE_RIGHT]	|| curKey[SDL_SCANCODE_D])	Key_right_event();
-    }
+		if (curKey[SDL_SCANCODE_RIGHT]	|| curKey[SDL_SCANCODE_D])	Key_right_event();
+	}
 
-    if (GAME_RUNNING == game_status || GAME_STOPPING == game_status){
-	    if (curKey[SDL_SCANCODE_1]		|| curKey[SDL_SCANCODE_Q])	Key_prev_level_event();
-	    if (curKey[SDL_SCANCODE_3]		|| curKey[SDL_SCANCODE_E])	Key_next_level_event();
-	    if (curKey[SDL_SCANCODE_2]		|| curKey[SDL_SCANCODE_R])	Key_restart_level_event();
+	if (GAME_RUNNING == game_status && (curTime - phisicsEventTime >= 10)){
+		phisicsEventTime = curTime;		
+
+		Timer_event();
 	}
 }
 
 static void Main_loop(void) {
-	Draw_background();
-	Update_window();
-
 	while(GAME_OVER != game_status) {
 		Process_events();
 		
@@ -69,6 +85,7 @@ static void Clean_up(void) {
 	CleanUp_images();
 	CleanUp_screen();
 	CleanUp_window();
+	CleanUp_heads();
 
 	SDL_Quit();
 }
@@ -78,12 +95,12 @@ static void Key_up_event(void){
 }
 
 static void Key_left_event(void){
-	Move_heroes_on_ox(-1);
+	Move_heroes_on_ox(-5);
 	Collision_detection();
 }
 
 static void Key_right_event(void){
-	Move_heroes_on_ox(1);
+	Move_heroes_on_ox(5);
 	Collision_detection();
 }
 
@@ -100,6 +117,10 @@ static void Key_next_level_event(void){
 static void Key_prev_level_event(void){
 	Restart_level(-3);
 	game_status = GAME_RUNNING;
+}
+
+static void Timer_event(void){
+
 }
 
 static void Render(void){
