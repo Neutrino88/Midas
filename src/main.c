@@ -65,7 +65,7 @@ static void Process_events(void) {
 		if (curKey[SDL_SCANCODE_RIGHT]	|| curKey[SDL_SCANCODE_D])	Key_right_event();
 	}
 
-	if (GAME_RUNNING == game_status && (curTime - phisicsEventTime >= 10)){
+	if (GAME_RUNNING == game_status && (curTime - phisicsEventTime >= 20)){
 		phisicsEventTime = curTime;		
 
 		Timer_event();
@@ -91,7 +91,7 @@ static void Clean_up(void) {
 }
 
 static void Key_up_event(void){
-
+	Jump_heroes_on_oy();
 }
 
 static void Key_left_event(void){
@@ -120,7 +120,8 @@ static void Key_prev_level_event(void){
 }
 
 static void Timer_event(void){
-
+	Phisics_update();
+	Collision_detection();
 }
 
 static void Render(void){

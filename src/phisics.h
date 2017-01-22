@@ -3,12 +3,19 @@
 
 	#define max(a, b) (a > b ? a : b)
 	#define min(a, b) (a < b ? a : b)
-	#define GRAVIT_CONST 0.05
+	#define GRAVIT_CONST 1
+	#define LEVITATION_TIME 3
 
 	enum{
 		HEROES_PERS,
 		FINISH_PERS,
 		PERS_TOTAL
+	};
+
+	enum{
+		ON_THE_BLOCK_POS,
+		IN_THE_AIR_POS,
+		POS_TOTAL
 	};
 
 	typedef struct Coord_t{
@@ -28,7 +35,9 @@
 void Set_heads_imgs(void);
 Coord_t* Get_head_img(size_t index);
 
+void Jump_heroes_on_oy(void);
 void Move_heroes_on_ox(int step);
+int Move_object_on_oy(Coord_t* object, int step);
 int Init_phisics(char* levelsFileName);
 
 int On_one_hor_line(Coord_t* one, Coord_t* two);
@@ -39,9 +48,12 @@ void Detection_heroes_to_normal_type(void);
 void Detection_gold_blocks(void);
 void Collision_detection(void);
 
+void Checking_heroes_and_finish_pos(void);
+
 int Add_head_block(int x, int y, int w, int h, int type);
 void Del_head_block(Coord_t* block);
 void Update_screen(void);
+void Phisics_update(void);
 
 void CleanUp_heads(void);
 
