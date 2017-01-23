@@ -47,6 +47,7 @@ int Init_phisics(char* levelsFileName);
 int On_one_hor_line(Coord_t* one, Coord_t* two);
 int On_one_ver_line(Coord_t* one, Coord_t* two);
 
+int  Detection_victory_of_the_heroes(void);
 void Detection_finish_to_gold_type(void);
 void Detection_heroes_to_normal_type(void);
 void Detection_gold_blocks(void);
@@ -61,6 +62,8 @@ void Phisics_update(void);
 
 void CleanUp_heads(void);
 
+void Level_complete(void);
+
 int Restart_level(int level_number);
-int Game_over(void);
+int Check_game_over(void);
 #endif

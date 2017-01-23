@@ -144,12 +144,12 @@ int Max_ver_step(Coord_t* one, int stepY, Coord_t* two){
 	return stepY;
 }
 int On_one_hor_line(Coord_t* one, Coord_t* two){
-/* 
+	/* 
 	return !0:
 		if first object have vertical projection on second object
 	return 0:
 		else
- */
+ 	*/
 	if (two->y >= one->y && 
 		two->y <  one->y + one->h - 1) return !0;
 	if (one->y >= two->y && 
@@ -214,6 +214,34 @@ void Jump_heroes_on_oy(void){
 		head_imgs[HEROES_PERS]->vy = -12 * GRAVIT_CONST;
 }
 
+void Level_completed(void){
+ 
+}
+
+void Level_lost(void){
+ 
+}
+
+int Detection_victory_of_the_heroes(void){
+	Coord_t* fin = head_imgs[FINISH_PERS];	/* finish */
+	Coord_t* her = head_imgs[HEROES_PERS];	/* heroes */
+
+	/* if heroes is normal or finish is gold then return*/
+	if (NORM_TYPE != her->type) return 0;
+	if (NORM_TYPE != fin->type) return 0;
+
+	/* detection of blocks which top */
+	if ( (On_one_ver_line(her, fin) && her->y == fin->y + fin->h) ||
+	/* detection of blocks which botton */
+	     (On_one_ver_line(her, fin) && her->y + her->h - 1 == fin->y) ||
+	/* detection of blocks which to the left */
+	     (On_one_hor_line(her, fin) && her->x == fin->x + fin->w) ||
+	/* detection of blocks which to the right */
+	     (On_one_hor_line(her, fin) && her->x + her->w - 1 == fin->x) )
+	 	 return !0;
+
+	return 0;
+}
 void Detection_gold_blocks(void){
 	Coord_t* cur = head_blocks;				/* current block */
 	Coord_t* her = head_imgs[HEROES_PERS];	/* heroes */
@@ -296,6 +324,7 @@ void Collision_detection(void){
 	Detection_gold_blocks();
 	Detection_heroes_to_normal_type();
 	Detection_finish_to_gold_type();
+	Detection_victory_of_the_heroes();
 }
 
 int Restart_level(int lvl_number){
@@ -447,14 +476,14 @@ void MoveClouds(int moveCl_1, int moveCl_2, int moveCl_3){
 		if (head_imgs[CLOUD_2_PERS]->x < 801) 
 			head_imgs[CLOUD_2_PERS]->x = head_imgs[CLOUD_2_PERS]->x + head_imgs[CLOUD_2_PERS]->vx;
 		else 
-			head_imgs[CLOUD_2_PERS]->x = -100;
+			head_imgs[CLOUD_2_PERS]->x = -200;
 	}
 	
 	if (moveCl_3){
 		if (head_imgs[CLOUD_3_PERS]->x < 801) 
 			head_imgs[CLOUD_3_PERS]->x = head_imgs[CLOUD_3_PERS]->x + head_imgs[CLOUD_3_PERS]->vx;
 		else 
-			head_imgs[CLOUD_3_PERS]->x = -80;
+			head_imgs[CLOUD_3_PERS]->x = -200;
 	}
 }
 
@@ -513,9 +542,17 @@ void Phisics_update(void){
 		Collision_detection();
 }	
 
-int Game_over(void){
-	if (GOLD_TYPE == Get_head_img(FINISH_PERS)->type) 
-		return !0;
+int Check_game_over(void){
+	if (GOLD_TYPE == Get_head_img(FINISH_PERS)->type ||
+		head_imgs[HEROES_PERS]->y > 1000){ 
+			Level_lost();
+			return 1;
+	}
+
+	if (Detection_victory_of_the_heroes()) {
+			Level_completed();
+			return 2;
+	}
 
 	return 0;
 }

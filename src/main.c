@@ -139,6 +139,10 @@ static void Render(void){
 	Update_window_rect(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
 
 	/* if (finish is gold) then game stopping */
-	if (Game_over())	
+	if (Check_game_over() == 1)
+		game_status = GAME_STOPPING;
+
+	/* if (level complete) then game stopping */
+	if (Check_game_over() == 2)
 		game_status = GAME_STOPPING;
 }
