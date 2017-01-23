@@ -54,6 +54,10 @@ int Draw_you_lost(int x, int y){
 	return Draw_image(Get_screen(), Get_you_lost_label(), x, y);
 }
 
+int Draw_control_keys(int x, int y){
+	return Draw_image(Get_screen(), Get_image(CONTROL_KEYS_IMG), x, y);
+}
+
 void CleanUp_images(void){
 	CleanUp_imgs(images);
 }

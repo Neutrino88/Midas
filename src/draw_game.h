@@ -18,6 +18,7 @@
 
 	int 			Draw_you_won	(int x, int y);
 	int 			Draw_you_lost	(int x, int y);
+	int 			Draw_control_keys(int x, int y);
 
 	void 			CleanUp_images	(void);
 #endif

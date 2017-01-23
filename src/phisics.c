@@ -421,6 +421,10 @@ void Update_screen(void){
 		head_imgs[CLOUD_3_PERS]->x,
 		head_imgs[CLOUD_3_PERS]->y);
 
+	/* Drawing control keys if levels_0 */
+	if (level_number == 0)
+		Draw_control_keys(310, 380);
+
 	/* Drawing heroes */
 	if (head_imgs[HEROES_PERS]->type == NORM_TYPE) 
 		Draw_heroes(HEROES_NORMAL_IMG, 
