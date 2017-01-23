@@ -15,7 +15,7 @@ Levels_t* levels;
 int	level_number;
 
 int Init_phisics(char* levelsFileName){
-	Create_levels("levels_2");
+	Create_levels("levels");
 	/* Reading levels */
 	levels = Read_levels(levelsFileName);
 	if (levels == NULL) return !0;
@@ -185,7 +185,7 @@ void Move_heroes_on_ox(int step){
 
 void Jump_heroes_on_oy(void){
 	if (heroes_pos == ON_THE_BLOCK_POS)
-		head_imgs[HEROES_PERS]->vy -= 6 * GRAVIT_CONST;
+		head_imgs[HEROES_PERS]->vy = -12 * GRAVIT_CONST;
 }
 
 void Detection_gold_blocks(void){
@@ -434,7 +434,7 @@ void Phisics_update(void){
 		/* If speed of current block <> 0 */
 		if (cur->vy != 0) 
 			Move_object_on_oy(cur, cur->vy);
-/*
+		/*
 		printf("%i %f\n", cur->y, cur->vy);*/
 
 		/* If current block dropped then delete this blos*/

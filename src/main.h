@@ -2,8 +2,8 @@
 	#define _MAIN_H_
 
 	#define SCREEN_TITLE 	"Midas"
-	#define SCREEN_WIDTH 	640
-	#define SCREEN_HEIGHT 	480
+	#define SCREEN_WIDTH 	801
+	#define SCREEN_HEIGHT 	534
 
 	enum {
 		GAME_STOPPING,

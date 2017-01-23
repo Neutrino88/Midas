@@ -109,12 +109,12 @@ Level_t* Create_lvl_0(void){
 		return NULL;
 	}
 
-	lvl->blocks_count = 11;
+	lvl->blocks_count = 22;
 
-	lvl->heroes.x = 85;
-	lvl->heroes.y = 100;
-	lvl->finish.x = 40;
-	lvl->finish.y = 100;
+	lvl->heroes.x = 25;
+	lvl->heroes.y = 150;
+	lvl->finish.x = 695;
+	lvl->finish.y = 150;
 
 	lvl->x =     (short*)calloc(sizeof(short), lvl->blocks_count);
 	lvl->y =     (short*)calloc(sizeof(short), lvl->blocks_count);
@@ -122,26 +122,39 @@ Level_t* Create_lvl_0(void){
 	lvl->w = 	 (short*)calloc(sizeof(short), lvl->blocks_count);
 	lvl->types = (short*)calloc(sizeof(short), lvl->blocks_count);
 
-	for (i = 0; i < lvl->blocks_count; ++i){
-		lvl->h[i] = 57;
-		lvl->w[i] = 57;
-		lvl->y[i] = 200;
-		
-		if (0 == i)	lvl->x[0] = 65;
-		else 		lvl->x[i] = 3 + lvl->w[i] + lvl->x[i-1];
+	for (i = 0; i < 12; ++i){
+		lvl->h[i] = 56;
+		lvl->w[i] = 56;
+		lvl->y[i] = 250;
+		lvl->types[i] = NORM_TYPE;
 
+		if 		(0 == i)	lvl->x[i] = 10;
+		else if (8 == i)	{
+			lvl->w[i] = 3 * lvl->w[i];
+			lvl->x[i] = lvl->w[i-1] + lvl->x[i-1];	
+		}
+		else lvl->x[i] = lvl->w[i-1] + lvl->x[i-1];
+	} 
+
+	for (i = 12; i < lvl->blocks_count; ++i){
+		lvl->h[i] = 56;
+		lvl->w[i] = 56;
+		lvl->y[i] = 250 + lvl->h[i-12];
 		lvl->types[i] = NORM_TYPE;
 	} 
 
-	lvl->w[0] = lvl->w[0] + 28;
-	lvl->x[0] = lvl->x[0] - 28;	
+	lvl->x[12] = lvl->x[0];
+	lvl->x[13] = lvl->x[2];
+	lvl->x[14] = lvl->x[4];
+	lvl->x[15] = lvl->x[6];
+	lvl->x[16] = lvl->x[8];
+	lvl->x[17] = lvl->x[8] + lvl->w[17];
+	lvl->x[18] = lvl->x[8] + 2*lvl->w[17];
+	lvl->x[19] = lvl->x[9];
+	lvl->x[20] = lvl->x[10];
+	lvl->x[21] = lvl->x[11];
 
-	lvl->types[8] = BLUE_TYPE;
-
-	lvl->y[9] = lvl->y[0] + lvl->h[0];
-	lvl->h[9] = 30;
-	lvl->w[9] = lvl->w[0];
-	lvl->x[9] = lvl->x[0];	
+	lvl->types[8] = BLUE_TYPE;	
 
 	return lvl;
 }
@@ -155,12 +168,12 @@ Level_t* Create_lvl_1(void){
 		return NULL;
 	}
 
-	lvl->blocks_count = 10;
+	lvl->blocks_count = 15;
 
-	lvl->heroes.x = 300;
-	lvl->heroes.y = 161;
-	lvl->finish.x = 400;
-	lvl->finish.y = 100;
+	lvl->heroes.x = 65;
+	lvl->heroes.y = 150;
+	lvl->finish.x = 25;
+	lvl->finish.y = 150;
 
 	lvl->x =     (short*)calloc(sizeof(short), lvl->blocks_count);
 	lvl->y =     (short*)calloc(sizeof(short), lvl->blocks_count);
@@ -169,19 +182,34 @@ Level_t* Create_lvl_1(void){
 	lvl->types = (short*)calloc(sizeof(short), lvl->blocks_count);
 
 	for (i = 0; i < lvl->blocks_count; ++i){
-		lvl->h[i] = 57;
-		lvl->w[i] = 57;
-		lvl->y[i] = 200;
-		
-		if (0 == i)	lvl->x[0] = 60;
-		else 		lvl->x[i] = 60 + lvl->x[i-1];
-
+		lvl->h[i] = 56;
+		lvl->w[i] = 56;
+		lvl->y[i] = 250;
 		lvl->types[i] = NORM_TYPE;
+		
+		if (0 == i)	{
+			lvl->x[i] = 10;
+			lvl->w[i] = 2*lvl->w[i];
+		}
+		else 		
+			lvl->x[i] = lvl->x[i-1] + lvl->w[i-1];
 	} 
 
-	lvl->types[8] = BLUE_TYPE;
-	lvl->y[9] = lvl->y[0] - lvl->h[0];
-	lvl->x[9] = lvl->x[0];	
+	lvl->h[11]		= 28;
+	lvl->y[11]		= lvl->y[0] + lvl->h[11];
+	lvl->types[11] 	= BLUE_TYPE;
+
+	lvl->h[13] 		= 57;
+	lvl->w[13] 		= lvl->w[11];
+	lvl->x[13]		= lvl->x[11];
+	lvl->y[13] 		= lvl->y[11] + lvl->h[11];
+	lvl->types[13]  = NORM_TYPE;
+
+	lvl->h[14] 		= 28;
+	lvl->w[14] 		= lvl->w[0];
+	lvl->x[14]		= lvl->x[0];
+	lvl->y[14] 		= 500;
+	lvl->types[14]  = NORM_TYPE;
 
 	return lvl;
 }

@@ -15,9 +15,9 @@
 	#define GRAY_COLOR_G 192
 	#define GRAY_COLOR_B 192
 
-	#define BLUE_COLOR_R 30
-	#define BLUE_COLOR_G 45
-	#define BLUE_COLOR_B 110
+	#define BLUE_COLOR_R 0
+	#define BLUE_COLOR_G 102
+	#define BLUE_COLOR_B 255
 
 	#define BORDER_COLOR_R 0
 	#define BORDER_COLOR_G 0

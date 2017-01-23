@@ -65,7 +65,7 @@ static void Process_events(void) {
 		if (curKey[SDL_SCANCODE_RIGHT]	|| curKey[SDL_SCANCODE_D])	Key_right_event();
 	}
 
-	if (GAME_RUNNING == game_status && (curTime - phisicsEventTime >= 20)){
+	if (GAME_RUNNING == game_status && (curTime - phisicsEventTime >= 23)){
 		phisicsEventTime = curTime;		
 
 		Timer_event();
