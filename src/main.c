@@ -5,7 +5,10 @@
 #include "phisics.h"
 
 static int game_status;
-static Uint32 moveEventTime, lvlEventTime, phisicsEventTime;	/* program need this values for organization timers */
+static Uint32 moveEventTime, 
+	          lvlEventTime, 
+	          phisicsEventTime,
+	          cloudsEventTime;	/* program need this values for organization timers */
 
 int main(int argc, char *argv[]) {	
 	Resource_init((argc > 1) ? argv[1] : "levels");
@@ -30,7 +33,8 @@ static void Game_init(void) {
 	moveEventTime 	 = SDL_GetTicks();
 	lvlEventTime  	 = moveEventTime;
 	phisicsEventTime = moveEventTime;
-	
+	cloudsEventTime = moveEventTime;
+
 	game_status = GAME_RUNNING;
 }
 
@@ -69,6 +73,12 @@ static void Process_events(void) {
 		phisicsEventTime = curTime;		
 
 		Timer_event();
+	}
+
+	if (GAME_RUNNING == game_status && (curTime - cloudsEventTime >= 40)){
+		cloudsEventTime = curTime;
+
+		MoveClouds(!0, !0, !0);
 	}
 }
 
@@ -126,7 +136,7 @@ static void Timer_event(void){
 
 static void Render(void){
 	Update_screen();
-	Update_window();
+	Update_window_rect(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
 
 	/* if (finish is gold) then game stopping */
 	if (Game_over())	

@@ -9,6 +9,9 @@
 	enum{
 		HEROES_PERS,
 		FINISH_PERS,
+		CLOUD_1_PERS,
+		CLOUD_2_PERS,
+		CLOUD_3_PERS,
 		PERS_TOTAL
 	};
 
@@ -38,6 +41,7 @@ Coord_t* Get_head_img(size_t index);
 void Jump_heroes_on_oy(void);
 void Move_heroes_on_ox(int step);
 int Move_object_on_oy(Coord_t* object, int step);
+void MoveClouds(int moveCl_1, int moveCl_2, int moveCl_3);
 int Init_phisics(char* levelsFileName);
 
 int On_one_hor_line(Coord_t* one, Coord_t* two);

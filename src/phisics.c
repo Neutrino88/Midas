@@ -20,6 +20,34 @@ int Init_phisics(char* levelsFileName){
 	levels = Read_levels(levelsFileName);
 	if (levels == NULL) return !0;
 
+	/* Setting head_img values of clouds */
+	head_imgs[CLOUD_1_PERS] = (Coord_t*)malloc(sizeof(Coord_t));
+	head_imgs[CLOUD_1_PERS]->next = NULL;
+	head_imgs[CLOUD_1_PERS]->vx   = 1;
+	head_imgs[CLOUD_1_PERS]->vy   = 0;
+	head_imgs[CLOUD_1_PERS]->x    = 120;
+	head_imgs[CLOUD_1_PERS]->y    = 40;
+	head_imgs[CLOUD_1_PERS]->w    = Get_image(CLOUD_1_IMG)->w;
+	head_imgs[CLOUD_1_PERS]->h    = Get_image(CLOUD_1_IMG)->h;
+
+	head_imgs[CLOUD_2_PERS] = (Coord_t*)malloc(sizeof(Coord_t));
+	head_imgs[CLOUD_2_PERS]->next = NULL;
+	head_imgs[CLOUD_2_PERS]->vx   = 1;
+	head_imgs[CLOUD_2_PERS]->vy   = 0;
+	head_imgs[CLOUD_2_PERS]->x    = 0;
+	head_imgs[CLOUD_2_PERS]->y    = 5;
+	head_imgs[CLOUD_2_PERS]->w    = Get_image(CLOUD_2_IMG)->w;
+	head_imgs[CLOUD_2_PERS]->h    = Get_image(CLOUD_2_IMG)->h;
+
+	head_imgs[CLOUD_3_PERS] = (Coord_t*)malloc(sizeof(Coord_t));
+	head_imgs[CLOUD_3_PERS]->next = NULL;
+	head_imgs[CLOUD_3_PERS]->vx   = 1;
+	head_imgs[CLOUD_3_PERS]->vy   = 0;
+	head_imgs[CLOUD_3_PERS]->x    = 5;
+	head_imgs[CLOUD_3_PERS]->y    = 120;
+	head_imgs[CLOUD_3_PERS]->w    = Get_image(CLOUD_3_IMG)->w;
+	head_imgs[CLOUD_3_PERS]->h    = Get_image(CLOUD_3_IMG)->h;
+
 	level_number = 0;
 	return 0;
 }
@@ -348,9 +376,8 @@ void Checking_heroes_and_finish_pos(void){
 
 void CleanUp_heads(void){
 	/* CleanUp head_imgs */
-	int i;
-	for (i = 0; i < PERS_TOTAL; ++i)
-		if (NULL != head_imgs[i]) free(head_imgs[i]);
+	if (NULL != head_imgs[HEROES_PERS]) free(head_imgs[HEROES_PERS]);
+	if (NULL != head_imgs[FINISH_PERS]) free(head_imgs[FINISH_PERS]);
 
 	/* CleanUp head_blocks variable */
 	while (NULL != head_blocks){
@@ -362,6 +389,17 @@ void Update_screen(void){
 	Coord_t* cur = NULL;
 	/* Drawing background */
 	Draw_background();
+	/* Drawing clouds */
+	Draw_cloud(CLOUD_1_IMG,
+		head_imgs[CLOUD_1_PERS]->x,
+		head_imgs[CLOUD_1_PERS]->y);
+	Draw_cloud(CLOUD_2_IMG,
+		head_imgs[CLOUD_2_PERS]->x,
+		head_imgs[CLOUD_2_PERS]->y);
+	Draw_cloud(CLOUD_3_IMG,
+		head_imgs[CLOUD_3_PERS]->x,
+		head_imgs[CLOUD_3_PERS]->y);
+
 	/* Drawing heroes */
 	if (head_imgs[HEROES_PERS]->type == NORM_TYPE) 
 		Draw_heroes(HEROES_NORMAL_IMG, 
@@ -393,6 +431,30 @@ void Update_screen(void){
 			Draw_block(BLUE_BLOCK, cur->x, cur->y, cur->w, cur->h);
 
 		cur = cur->next;
+	}
+}
+
+void MoveClouds(int moveCl_1, int moveCl_2, int moveCl_3){
+	/* Moving clouds */
+	if (moveCl_1){
+		if (head_imgs[CLOUD_1_PERS]->x < 801) 
+			head_imgs[CLOUD_1_PERS]->x = head_imgs[CLOUD_1_PERS]->x + head_imgs[CLOUD_1_PERS]->vx;
+		else 
+			head_imgs[CLOUD_1_PERS]->x = -200;
+	}
+
+	if (moveCl_2){
+		if (head_imgs[CLOUD_2_PERS]->x < 801) 
+			head_imgs[CLOUD_2_PERS]->x = head_imgs[CLOUD_2_PERS]->x + head_imgs[CLOUD_2_PERS]->vx;
+		else 
+			head_imgs[CLOUD_2_PERS]->x = -100;
+	}
+	
+	if (moveCl_3){
+		if (head_imgs[CLOUD_3_PERS]->x < 801) 
+			head_imgs[CLOUD_3_PERS]->x = head_imgs[CLOUD_3_PERS]->x + head_imgs[CLOUD_3_PERS]->vx;
+		else 
+			head_imgs[CLOUD_3_PERS]->x = -80;
 	}
 }
 

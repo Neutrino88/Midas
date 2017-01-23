@@ -37,6 +37,15 @@ int Draw_block(size_t type, int x, int y, size_t w, size_t h){
 	return Draw_rectangle(Get_screen(), type, x, y, w, h);
 }
 
+int Draw_cloud(size_t type, int x, int y){
+	if (type == CLOUD_1_IMG)
+		return Draw_image(Get_screen(), Get_image(CLOUD_1_IMG), x, y);
+	else if (type == CLOUD_2_IMG)
+		return Draw_image(Get_screen(), Get_image(CLOUD_2_IMG), x, y);
+	else
+		return Draw_image(Get_screen(), Get_image(CLOUD_3_IMG), x, y);
+}
+
 void CleanUp_images(void){
 	CleanUp_imgs(images);
 }
