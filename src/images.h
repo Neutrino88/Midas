@@ -22,6 +22,9 @@
 	void 			Load_finish_imgs(SDL_Surface** images);
 	void 			Load_backgr_imgs(SDL_Surface** images);
 	
+	SDL_Surface* 	Get_you_won_label(void);
+	SDL_Surface* 	Get_you_lost_label(void);
+
 	SDL_Surface** 	Load_imgs 		(void);
 	void 			CleanUp_imgs 	(SDL_Surface** images);
 #endif

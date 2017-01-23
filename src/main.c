@@ -135,14 +135,15 @@ static void Timer_event(void){
 }
 
 static void Render(void){
+	int game_result;
+	
 	Update_screen();
-	Update_window_rect(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
+	game_result = Check_game_over();
 
 	/* if (finish is gold) then game stopping */
-	if (Check_game_over() == 1)
-		game_status = GAME_STOPPING;
-
+	if 		(game_result == 1) game_status = GAME_STOPPING;
 	/* if (level complete) then game stopping */
-	if (Check_game_over() == 2)
-		game_status = GAME_STOPPING;
+	else if (game_result == 2) game_status = GAME_STOPPING;
+
+	Update_window_rect(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
 }

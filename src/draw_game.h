@@ -16,5 +16,8 @@
 	int 			Draw_block		(size_t type, int x, int y, size_t w, size_t h);
 	int 			Draw_cloud		(size_t type, int x, int y);
 
+	int 			Draw_you_won	(int x, int y);
+	int 			Draw_you_lost	(int x, int y);
+
 	void 			CleanUp_images	(void);
 #endif

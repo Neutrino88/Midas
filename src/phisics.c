@@ -214,14 +214,6 @@ void Jump_heroes_on_oy(void){
 		head_imgs[HEROES_PERS]->vy = -12 * GRAVIT_CONST;
 }
 
-void Level_completed(void){
- 
-}
-
-void Level_lost(void){
- 
-}
-
 int Detection_victory_of_the_heroes(void){
 	Coord_t* fin = head_imgs[FINISH_PERS];	/* finish */
 	Coord_t* her = head_imgs[HEROES_PERS];	/* heroes */
@@ -545,12 +537,12 @@ void Phisics_update(void){
 int Check_game_over(void){
 	if (GOLD_TYPE == Get_head_img(FINISH_PERS)->type ||
 		head_imgs[HEROES_PERS]->y > 1000){ 
-			Level_lost();
+			Draw_you_lost(320, 180);
 			return 1;
 	}
 
 	if (Detection_victory_of_the_heroes()) {
-			Level_completed();
+			Draw_you_won(270, 180);
 			return 2;
 	}
 

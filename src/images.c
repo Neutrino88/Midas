@@ -46,6 +46,14 @@ void Load_backgr_imgs(SDL_Surface** images){
 
 }
 
+SDL_Surface* Get_you_won_label(void){
+	return Load_img("img/you_won.png");
+}
+
+SDL_Surface* Get_you_lost_label(void){
+	return Load_img("img/you_lost.png");
+}
+
 SDL_Surface** Load_imgs(void){
 	SDL_Surface** images = (SDL_Surface**)calloc(sizeof(SDL_Surface*), IMGS_TOTAL);
 	if (NULL == images) return NULL;
