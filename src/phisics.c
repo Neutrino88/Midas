@@ -99,11 +99,12 @@ int Max_ver_step(Coord_t* one, int stepY, Coord_t* two){
 
 	if (stepY < 0 &&
 		one->y + stepY < two->y + two->h - 1 && 
-		one->y + one->h - 1 + stepY > two->y + two->h -1) 
+		one->y + one->h - 1 + stepY > two->y + two->h -1)
 			return one->y - (two->y + two->h - 1);
+
 	if (stepY > 0 &&
 		one->y < two->y && 
-		one->y + one->h - 1 + stepY > two->y) 
+		one->y + one->h - 1 + stepY > two->y)
 			return two->y - (one->y + one->h - 1);
 	
 	return stepY;
@@ -143,7 +144,7 @@ int Move_object_on_oy(Coord_t* object, int step){
 		if (object != cur_block)
 			max_way = min(abs(Max_ver_step(object, step, cur_block)), abs(max_way));
 
-		cur_block = cur_block ->next;
+		cur_block = cur_block->next;
 	}
 	/* Detection collision object and heroes  */
 	if (object != head_imgs[HEROES_PERS])
@@ -182,6 +183,7 @@ void Jump_heroes_on_oy(void){
 void Detection_gold_blocks(void){
 	Coord_t* cur = head_blocks;				/* current block */
 	Coord_t* her = head_imgs[HEROES_PERS];	/* heroes */
+	Uint32 curTime = SDL_GetTicks();
 
 	/* if heroes isn't gold */
 	if (GOLD_TYPE != her->type) return;
@@ -200,8 +202,11 @@ void Detection_gold_blocks(void){
 		/* detection of blocks which to the left */
 		     (On_one_hor_line(her, cur) && her->x == cur->x + cur->w) ||
 		/* detection of blocks which to the right */
-		     (On_one_hor_line(her, cur) && her->x + her->w - 1 == cur->x) )
+		     (On_one_hor_line(her, cur) && her->x + her->w - 1 == cur->x) ){
+		     
+			 cur->time = curTime;
 		     cur->type = GOLD_TYPE;
+		}
 
 		/* To next block */
 		cur = cur->next;
@@ -261,6 +266,7 @@ void Collision_detection(void){
 
 int Restart_level(int lvl_number){
 	int i;
+	Uint32 curTime;
 	/* Cleaning heads*/
 	CleanUp_heads();
 
@@ -296,12 +302,17 @@ int Restart_level(int lvl_number){
 	head_imgs[FINISH_PERS]->type = NORM_TYPE;
 
 	/* Setting head_blocks values */
-	for (i = 0; i < levels->lvls[level_number]->blocks_count; ++i)
+	curTime = SDL_GetTicks();
+	for (i = 0; i < levels->lvls[level_number]->blocks_count; ++i){
 		Add_head_block(levels->lvls[level_number]->x[i], 
 					   levels->lvls[level_number]->y[i], 
 			           levels->lvls[level_number]->w[i], 
 			           levels->lvls[level_number]->h[i], 
 			           levels->lvls[level_number]->types[i]);
+
+		if (head_blocks->type == GOLD_TYPE)
+			head_blocks->time = curTime;
+	}
 
 	/* Checking heroes and finish pos */
 	Checking_heroes_and_finish_pos();
@@ -314,11 +325,16 @@ void Checking_heroes_and_finish_pos(void){
 	int max_way_finish = 1;
 
 	while (NULL != cur){
-		max_way_heroes = min(abs(Max_ver_step(head_imgs[HEROES_PERS], 1, cur)), abs(max_way_heroes));
-		max_way_finish = min(abs(Max_ver_step(head_imgs[FINISH_PERS], 1, cur)), abs(max_way_finish));
+		if (max_way_heroes == 1)
+			max_way_heroes = min(abs(Max_ver_step(head_imgs[HEROES_PERS], 1, cur)), abs(max_way_heroes));
+		if (max_way_finish == 1)
+			max_way_finish = min(abs(Max_ver_step(head_imgs[FINISH_PERS], 1, cur)), abs(max_way_finish));
 
 		cur = cur->next;
 	}
+
+	max_way_heroes = min(abs(Max_ver_step(head_imgs[HEROES_PERS], 1, head_imgs[FINISH_PERS])), abs(max_way_heroes));
+	max_way_finish = min(abs(Max_ver_step(head_imgs[FINISH_PERS], 1, head_imgs[HEROES_PERS])), abs(max_way_finish));	
 
 	heroes_pos = (0 == max_way_heroes) ? ON_THE_BLOCK_POS : IN_THE_AIR_POS;
 	finish_pos = (0 == max_way_finish) ? ON_THE_BLOCK_POS : IN_THE_AIR_POS;
@@ -377,6 +393,8 @@ void Update_screen(void){
 void Phisics_update(void){
 	Coord_t* her = head_imgs[HEROES_PERS]; 
 	Coord_t* fin = head_imgs[FINISH_PERS];
+	Coord_t* cur = head_blocks;
+	Uint32 curTime;
 
 	/* Moving heroes */
 	Checking_heroes_and_finish_pos();
@@ -386,7 +404,7 @@ void Phisics_update(void){
 	else if (heroes_pos == ON_THE_BLOCK_POS && her->vy > 0)
 		her->vy = 0;
 
-	if (her->vy != 0)
+	if (her->vy != 0 && her->y < 1000)
 		Move_object_on_oy(her, her->vy);
 
 	/* Moving finish */
@@ -395,9 +413,33 @@ void Phisics_update(void){
 	else if (finish_pos == ON_THE_BLOCK_POS && fin->vy > 0)
 		fin->vy = 0;
 
-	if (fin->vy != 0)
+	if (fin->vy != 0 && fin->y < 1000)
 		Move_object_on_oy(fin, fin->vy);
 
+	/* Moving blocks */
+	curTime = SDL_GetTicks();
+	while (NULL != cur){
+		/* If levitation time of current block is over then increment speed*/
+		if (cur->type == GOLD_TYPE && curTime - cur->time >= LEVITATION_TIME)
+			cur->vy += GRAVIT_CONST;
+
+		/* If speed of current block <> 0 */
+		if (cur->vy != 0) 
+			Move_object_on_oy(cur, cur->vy);
+
+		printf("%i %i\n", cur->y, cur->vy)
+
+		/* If current block dropped then delete this blos*/
+		if (cur->y > 1000){
+			Coord_t* next_block = cur->next;
+			Del_head_block(cur);
+			cur = next_block;
+		}
+		else
+			cur = cur->next;
+	}
+
+	/* if was moving */
 	if (her->vy != 0 || fin->vy != 0)
 		Collision_detection();
 }	

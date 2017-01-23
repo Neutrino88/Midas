@@ -4,7 +4,7 @@
 	#define max(a, b) (a > b ? a : b)
 	#define min(a, b) (a < b ? a : b)
 	#define GRAVIT_CONST 1
-	#define LEVITATION_TIME 3
+	#define LEVITATION_TIME 1500
 
 	enum{
 		HEROES_PERS,
