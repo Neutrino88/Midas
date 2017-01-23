@@ -5,7 +5,7 @@
 #include "phisics.h"
 
 static int game_status;
-static Uint32 moveEventTime, lvlEventTime, phisicsEventTime, curTime;	/* program need this values for organization timers */
+static Uint32 moveEventTime, lvlEventTime, phisicsEventTime;	/* program need this values for organization timers */
 
 int main(int argc, char *argv[]) {	
 	Resource_init((argc > 1) ? argv[1] : "levels");
@@ -37,9 +37,9 @@ static void Game_init(void) {
 static void Process_events(void) {
 	SDL_Event event;		/* Event handler */
 	SDL_Keycode keycode;
+	Uint32 curTime = SDL_GetTicks();
 	const Uint8* curKey = SDL_GetKeyboardState( NULL );
 
-	curTime = SDL_GetTicks();
 	while( SDL_PollEvent( &event ) != 0 ) { 
 		keycode = event.key.keysym.sym;
 

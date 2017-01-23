@@ -143,12 +143,6 @@ Level_t* Create_lvl_0(void){
 	lvl->w[9] = lvl->w[0];
 	lvl->x[9] = lvl->x[0];	
 
-	lvl->y[10] = lvl->y[0] - lvl->h[0];
-	lvl->h[10] = 30;
-	lvl->w[10] = lvl->w[0];
-	lvl->x[10] = lvl->x[0];	
-	lvl->types[10] = GOLD_TYPE;
-
 	return lvl;
 }
 

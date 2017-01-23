@@ -102,9 +102,17 @@ int Max_ver_step(Coord_t* one, int stepY, Coord_t* two){
 		one->y + one->h - 1 + stepY > two->y + two->h -1)
 			return one->y - (two->y + two->h - 1);
 
+	/* one is block */
+	if (one != head_imgs[HEROES_PERS] &&
+		one != head_imgs[FINISH_PERS] &&
+		stepY > 0 &&
+		one->y < two->y && 
+		one->y + one->h + stepY - 1 >= two->y)
+			return 0;	
+
 	if (stepY > 0 &&
 		one->y < two->y && 
-		one->y + one->h - 1 + stepY > two->y)
+		one->y + one->h - 1 + stepY >= two->y)
 			return two->y - (one->y + one->h - 1);
 	
 	return stepY;
@@ -426,8 +434,8 @@ void Phisics_update(void){
 		/* If speed of current block <> 0 */
 		if (cur->vy != 0) 
 			Move_object_on_oy(cur, cur->vy);
-
-		printf("%i %i\n", cur->y, cur->vy)
+/*
+		printf("%i %f\n", cur->y, cur->vy);*/
 
 		/* If current block dropped then delete this blos*/
 		if (cur->y > 1000){
