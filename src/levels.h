@@ -36,5 +36,6 @@
 
 	Level_t* 	Create_lvl_0(void);
 	Level_t* 	Create_lvl_1(void);
+	Level_t* 	Create_lvl_2(void);
 	void 		Create_levels(char* filename);
 #endif

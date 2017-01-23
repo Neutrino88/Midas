@@ -73,7 +73,6 @@ Coord_t* Get_head_img(size_t index){
 	else 					return NULL;
 }
 
-
 int Max_hor_step(Coord_t* one, int stepX, Coord_t* two){
 	/* 	return max step (<= stepX) which first object can do on the horizontal axis */
 
@@ -98,17 +97,16 @@ int Max_ver_step(Coord_t* one, int stepY, Coord_t* two){
 	if (!On_one_ver_line(one, two)) return stepY; 
 
 	if (stepY < 0 &&
-		one->y + stepY < two->y + two->h - 1 && 
-		one->y + one->h - 1 + stepY > two->y + two->h -1)
-			return one->y - (two->y + two->h - 1);
+		one->y + stepY < two->y + two->h && 
+		one->y + one->h - 1 + stepY > two->y + two->h)
+			return one->y - (two->y + two->h);
 
-	/* one is block */
 	if (one != head_imgs[HEROES_PERS] &&
 		one != head_imgs[FINISH_PERS] &&
 		stepY > 0 &&
 		one->y < two->y && 
-		one->y + one->h + stepY - 1 >= two->y)
-			return 0;	
+		one->y + one->h + stepY >= two->y)
+			return two->y - (one->y + one->h);
 
 	if (stepY > 0 &&
 		one->y < two->y && 
@@ -404,6 +402,30 @@ void Phisics_update(void){
 	Coord_t* cur = head_blocks;
 	Uint32 curTime;
 
+	/* Moving blocks */
+	curTime = SDL_GetTicks();
+	while (NULL != cur){
+		/* If levitation time of current block is over then increment speed*/
+		if (cur->type == GOLD_TYPE && curTime - cur->time >= LEVITATION_TIME)
+			cur->vy += GRAVIT_CONST;
+
+		/* If speed of current block <> 0 */
+		if (cur->vy != 0 &&
+			0 == Move_object_on_oy(cur, cur->vy))
+			cur->vy = 0;
+		/*
+		printf("%i %f\n", cur->y, cur->vy);*/
+
+		/* If current block dropped then delete this blos*/
+		if (cur->y > 1000){
+			Coord_t* next_block = cur->next;
+			Del_head_block(cur);
+			cur = next_block;
+		}
+		else
+			cur = cur->next;
+	}
+
 	/* Moving heroes */
 	Checking_heroes_and_finish_pos();
 
@@ -423,29 +445,6 @@ void Phisics_update(void){
 
 	if (fin->vy != 0 && fin->y < 1000)
 		Move_object_on_oy(fin, fin->vy);
-
-	/* Moving blocks */
-	curTime = SDL_GetTicks();
-	while (NULL != cur){
-		/* If levitation time of current block is over then increment speed*/
-		if (cur->type == GOLD_TYPE && curTime - cur->time >= LEVITATION_TIME)
-			cur->vy += GRAVIT_CONST;
-
-		/* If speed of current block <> 0 */
-		if (cur->vy != 0) 
-			Move_object_on_oy(cur, cur->vy);
-		/*
-		printf("%i %f\n", cur->y, cur->vy);*/
-
-		/* If current block dropped then delete this blos*/
-		if (cur->y > 1000){
-			Coord_t* next_block = cur->next;
-			Del_head_block(cur);
-			cur = next_block;
-		}
-		else
-			cur = cur->next;
-	}
 
 	/* if was moving */
 	if (her->vy != 0 || fin->vy != 0)
