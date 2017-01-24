@@ -540,7 +540,8 @@ void Phisics_update(void){
 
 int Check_game_over(void){
 	if (GOLD_TYPE == Get_head_img(FINISH_PERS)->type ||
-		head_imgs[HEROES_PERS]->y > 1000){ 
+		head_imgs[HEROES_PERS]->y > 700 ||
+		head_imgs[FINISH_PERS]->y > 700){ 
 			Draw_you_lost(320, 180);
 			return 1;
 	}
