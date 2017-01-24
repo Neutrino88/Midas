@@ -15,7 +15,6 @@ Levels_t* levels;
 int	level_number;
 
 int Init_phisics(char* levelsFileName){
-	Create_levels("levels");
 	/* Reading levels */
 	levels = Read_levels(levelsFileName);
 	if (levels == NULL) return !0;
