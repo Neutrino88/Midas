@@ -315,7 +315,7 @@ Level_t* Create_lvl_3(void){
 	lvl->heroes.x = 100;
 	lvl->heroes.y = 100;
 	lvl->finish.x = 600;
-	lvl->finish.y = 100;
+	lvl->finish.y = 300;
 
 	lvl->x =     (short*)calloc(sizeof(short), lvl->blocks_count);
 	lvl->y =     (short*)calloc(sizeof(short), lvl->blocks_count);
@@ -376,6 +376,83 @@ Level_t* Create_lvl_3(void){
 	return lvl;
 }
 
+Level_t* Create_lvl_4(void){
+	int i;
+	Level_t*  lvl 	= (Level_t*) malloc(sizeof(Level_t));
+
+	if (NULL == lvl) {
+		printf("Create_lvl_4 error!\n");
+		return NULL;
+	}
+
+	lvl->blocks_count = 14;
+
+	lvl->heroes.x = 80;
+	lvl->heroes.y = 300;
+	lvl->finish.x = 685;
+	lvl->finish.y = 370;
+
+	lvl->x =     (short*)calloc(sizeof(short), lvl->blocks_count);
+	lvl->y =     (short*)calloc(sizeof(short), lvl->blocks_count);
+	lvl->h = 	 (short*)calloc(sizeof(short), lvl->blocks_count);
+	lvl->w = 	 (short*)calloc(sizeof(short), lvl->blocks_count);
+	lvl->types = (short*)calloc(sizeof(short), lvl->blocks_count);
+
+	for (i = 0; i < lvl->blocks_count; ++i){
+		lvl->types[i] = NORM_TYPE;
+		lvl->w[i] = 60;
+		lvl->h[i] = 28;	
+	}
+
+	lvl->x[0] = 60;
+	lvl->y[0] = 430;
+	lvl->h[0] = 56;
+
+	lvl->x[1] = lvl->x[0];
+	lvl->y[1] = lvl->y[0] - lvl->h[1];
+	
+	lvl->x[2] = lvl->x[1] + lvl->w[1] + 60;
+	lvl->y[2] = lvl->y[1];
+
+	lvl->x[3] = lvl->x[2] + lvl->w[2];
+	lvl->y[3] = lvl->y[2];
+
+	lvl->x[4] = lvl->x[3] + lvl->w[3] + 120;
+	lvl->y[4] = lvl->y[3];	
+
+	lvl->x[5] = lvl->x[4] + lvl->w[4] + 60;
+	lvl->y[5] = lvl->y[4] - 56;
+
+	lvl->x[6] = lvl->x[4];
+	lvl->y[6] = lvl->y[4] - 120;		
+
+	lvl->x[7] = lvl->x[5] + 110;
+	lvl->y[7] = lvl->y[0] + lvl->h[0] - lvl->h[7];		
+
+	lvl->x[8] = lvl->x[3] + lvl->w[3];
+	lvl->y[8] = lvl->y[6] - 2*lvl->h[8];
+
+	lvl->x[9] = lvl->x[2];
+	lvl->y[9] = lvl->y[8] + lvl->h[8];
+
+	lvl->x[10] = lvl->x[9] - lvl->w[10];
+	lvl->y[10] = lvl->y[9] - lvl->h[10];
+
+	lvl->x[11] = lvl->x[0];
+	lvl->y[11] = lvl->y[10] - 2*lvl->h[10];
+
+	lvl->x[12] = lvl->x[9];
+	lvl->y[12] = lvl->y[11] - 2*lvl->h[11];
+
+	lvl->x[13] = lvl->x[8];
+	lvl->y[13] = lvl->y[12] - 2*lvl->h[12];
+	lvl->h[13] = 14;
+	lvl->w[13] = 1.9 * lvl->w[13];
+	lvl->types[13] = BLUE_TYPE;
+
+	return lvl;
+}
+
 void Create_levels(char* filename){
 	Levels_t* lvls 	= (Levels_t*)malloc(sizeof(Levels_t));
 	
@@ -384,7 +461,7 @@ void Create_levels(char* filename){
 		return;
 	}
 	/* Allocating memory for lvls->lvls */
-	lvls->lvls_count = 4;
+	lvls->lvls_count = 5;
 	lvls->lvls = (Level_t**)calloc(sizeof(Level_t*),lvls->lvls_count);
 	if (NULL == lvls->lvls){
 		printf("Allocate memory for lvls->lvls failded (Create_levels)!\n");
@@ -395,6 +472,7 @@ void Create_levels(char* filename){
 	lvls->lvls[1] = Create_lvl_1();
 	lvls->lvls[2] = Create_lvl_2();
 	lvls->lvls[3] = Create_lvl_3();
+	lvls->lvls[4] = Create_lvl_4();
 
 	/* Filling lvls data */
 	
