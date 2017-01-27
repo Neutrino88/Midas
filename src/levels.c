@@ -62,7 +62,7 @@ Levels_t* Read_levels(char* filename){
 }
 
 int Write_levels(Levels_t* levels, char* filename){
-	int i = 5;
+	int i;
 	FILE* file = NULL;
 	Level_t* level = NULL;
 	if (NULL == levels || NULL == filename) return -1;
@@ -458,7 +458,7 @@ Level_t* Create_lvl_5(void){
 	Level_t*  lvl 	= (Level_t*) malloc(sizeof(Level_t));
 
 	if (NULL == lvl) {
-		printf("Create_lvl_4 error!\n");
+		printf("Create_lvl_5 error!\n");
 		return NULL;
 	}
 
@@ -593,6 +593,132 @@ Level_t* Create_lvl_5(void){
 	return lvl;
 }
 
+Level_t* Create_lvl_6(void){
+	int i;
+	Level_t*  lvl 	= (Level_t*) malloc(sizeof(Level_t));
+
+	if (NULL == lvl) {
+		printf("Create_lvl_6 error!\n");
+		return NULL;
+	}
+
+	lvl->blocks_count = 61;
+
+	lvl->heroes.x = 75;
+	lvl->heroes.y = 50;
+	lvl->finish.x = 670;
+	lvl->finish.y = 400;
+
+	lvl->x =     (short*)calloc(sizeof(short), lvl->blocks_count);
+	lvl->y =     (short*)calloc(sizeof(short), lvl->blocks_count);
+	lvl->h = 	 (short*)calloc(sizeof(short), lvl->blocks_count);
+	lvl->w = 	 (short*)calloc(sizeof(short), lvl->blocks_count);
+	lvl->types = (short*)calloc(sizeof(short), lvl->blocks_count);
+
+	for (i = 0; i < 11; ++i){
+		lvl->types[i] = NORM_TYPE;
+		lvl->w[i] = 60;
+		lvl->h[i] = 20;
+
+		if 		(i == 0) 	lvl->x[i] = 60;
+		else if (i % 2 == 0)lvl->x[i] = lvl->x[i-2] + 2*lvl->w[i-2];
+		else 				lvl->x[i] = lvl->x[i-1];
+
+		if 		(i == 0) 	lvl->y[i] = 100;
+		else if (i == 1)	lvl->y[i] = lvl->y[i-1] + lvl->h[i-1];
+		else 				lvl->y[i] = lvl->y[i-2];
+	}
+
+	for (i = 11; i < 16; ++i){
+		lvl->types[i] = BLUE_TYPE;
+		lvl->w[i] = 60;
+		lvl->h[i] = 40;
+		lvl->x[i] = lvl->x[(i-11)*2] + lvl->w[(i-11)*2];
+		lvl->y[i] = lvl->y[0];
+	}
+
+	for (i = 16; i < 26; ++i){
+		lvl->types[i] = NORM_TYPE;
+		lvl->w[i] = 60;
+		lvl->h[i] = 20;
+
+		if 		(i == 16) 	lvl->x[i] = lvl->x[10];
+		else if (i == 17)	lvl->x[i] = lvl->x[i-1] - 2*lvl->w[i-1];
+		else if (i == 27)	lvl->x[i] = lvl->x[i-2] -   lvl->w[i-2];
+		else if (i % 2 == 1)lvl->x[i] = lvl->x[i-2] - 2*lvl->w[i-2];
+		else 				lvl->x[i] = lvl->x[i-1];
+
+		if 		(i == 16) 	lvl->y[i] = lvl->y[11] + lvl->h[11] + 150;
+		else if (i % 2 == 1)lvl->y[i] = lvl->y[i-1] - lvl->h[i-1];
+		else 				lvl->y[i] = lvl->y[i-1] + lvl->h[i-1];
+	}
+
+	for (i = 26; i < 31; ++i){
+		lvl->types[i] = BLUE_TYPE;
+		lvl->w[i] = 60;
+		lvl->h[i] = 40;
+		lvl->x[i] = lvl->x[i - 15];
+		lvl->y[i] = lvl->y[16] - lvl->h[16];
+	}
+
+	lvl->types[31] = NORM_TYPE;
+	lvl->w[31] = 60;
+	lvl->h[31] = 20;
+	lvl->x[31] = lvl->x[0];
+	lvl->y[31] = lvl->y[26] + lvl->h[11] + 150;
+
+	for (i = 32; i < 44; ++i){
+		lvl->types[i] = NORM_TYPE;
+		lvl->w[i] = 20;
+		lvl->h[i] = 24;
+		lvl->y[i] = lvl->y[31] - lvl->h[31];
+
+		if (32 == i)lvl->x[i] = lvl->x[31]  +   lvl->w[31];
+		else 		lvl->x[i] = lvl->x[i-1] + 2*lvl->w[i-1];
+	}
+
+	for (i = 44; i < 56; ++i){
+		lvl->types[i] = BLUE_TYPE;
+		lvl->w[i] = 20;
+		lvl->h[i] = 20;
+		lvl->y[i] = lvl->y[31] - lvl->h[31] + 4;
+
+		lvl->x[i] = lvl->x[i-12] + lvl->w[i-12];
+	}
+		
+	lvl->types[56] = NORM_TYPE;
+	lvl->w[56] = 10;
+	lvl->h[56] = (lvl->y[55] + lvl->h[55]) - (lvl->y[26] + lvl->h[26]);
+	lvl->x[56] = lvl->x[55] + lvl->w[55];
+	lvl->y[56] = lvl->y[26] + lvl->h[26];
+
+	lvl->types[57] = NORM_TYPE;
+	lvl->w[57] = 10;
+	lvl->h[57] = lvl->h[56];
+	lvl->x[57] = lvl->x[56] + lvl->w[56];
+	lvl->y[57] = lvl->y[56];
+
+	lvl->types[58] = NORM_TYPE;
+	lvl->w[58] = 100;
+	lvl->h[58] = 20;
+	lvl->x[58] = lvl->x[57] + lvl->w[57];
+	lvl->y[58] = lvl->y[44];
+
+	lvl->types[59] = BLUE_TYPE;
+	lvl->w[59] = 10;
+	lvl->h[59] = (lvl->y[31] + lvl->h[31]) - lvl->y[0];
+	lvl->x[59] = lvl->x[0] - lvl->w[59];
+	lvl->y[59] = lvl->y[0];
+
+	lvl->types[60] = lvl->types[59];
+	lvl->w[60] = lvl->w[59];
+	lvl->h[60] = lvl->h[59] - 16;
+	lvl->x[60] = lvl->x[10] + lvl->w[10];
+	lvl->y[60] = lvl->y[59];
+
+	return lvl;
+}
+
 void Create_levels(char* filename){
 	Levels_t* lvls 	= (Levels_t*)malloc(sizeof(Levels_t));
 	
@@ -601,7 +727,7 @@ void Create_levels(char* filename){
 		return;
 	}
 	/* Allocating memory for lvls->lvls */
-	lvls->lvls_count = 6;
+	lvls->lvls_count = 7;
 	lvls->lvls = (Level_t**)calloc(sizeof(Level_t*),lvls->lvls_count);
 	if (NULL == lvls->lvls){
 		printf("Allocate memory for lvls->lvls failded (Create_levels)!\n");
@@ -614,6 +740,7 @@ void Create_levels(char* filename){
 	lvls->lvls[3] = Create_lvl_3();
 	lvls->lvls[4] = Create_lvl_4();
 	lvls->lvls[5] = Create_lvl_5();
+	lvls->lvls[6] = Create_lvl_6();
 
 	/* Filling lvls data */
 	

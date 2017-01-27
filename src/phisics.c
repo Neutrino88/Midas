@@ -222,7 +222,7 @@ int Detection_victory_of_the_heroes(void){
 	if (NORM_TYPE != fin->type) return 0;
 
 	/* detection of blocks which top */
-	if ( (On_one_ver_line(her, fin) && her->y == fin->y + fin->h) ||
+	if ( (On_one_ver_line(her, fin) && her->y == fin->y + fin->h - 1) ||
 	/* detection of blocks which botton */
 	     (On_one_ver_line(her, fin) && her->y + her->h - 1 == fin->y) ||
 	/* detection of blocks which to the left */
@@ -302,7 +302,7 @@ void Detection_finish_to_gold_type(void){
 	if (GOLD_TYPE == fin->type) return;
 
 	/* detection of blocks which top */
-	if ( (On_one_ver_line(her, fin) && her->y == fin->y + fin->h) ||
+	if ( (On_one_ver_line(her, fin) && her->y == fin->y + fin->h - 1) ||
 	/* detection of blocks which botton */
 	     (On_one_ver_line(her, fin) && her->y + her->h - 1 == fin->y) ||
 	/* detection of blocks which to the left */
@@ -325,8 +325,9 @@ int Restart_level(int lvl_number){
 	CleanUp_heads();
 
 	/* Setting level number */
-	if 		(-3 == lvl_number && level_number > 0) 
-		--level_number;	
+	if 		(-3 == lvl_number)
+		if (0 == level_number) 	level_number = levels->lvls_count-1;
+		else 					--level_number;	
 	else if (-2 == lvl_number && level_number < levels->lvls_count) 
 		++level_number;
 	else if (-1 != lvl_number) 
