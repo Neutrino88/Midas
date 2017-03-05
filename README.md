@@ -2,6 +2,8 @@
 
 Midas is a simple 2D-platformer game, written on C language using based on one Greek legend.
 
+![alt text](screenshots/screenshot_1.png "Game screenshot")
+
 ### The backstory
 Midas was a Phrygian king who was renowned for his great fortune. Legend has it that in reward for a good deed Midas asked Dionysus a gift. That gift was to make everything he touches to become gold. Soon enough the king nearly starve (due to the fact that the food become gold). In order to get rid of the unfortune sorcery Dionis told Midas to take a bath in saint waters. This is what you are going to do.
 
